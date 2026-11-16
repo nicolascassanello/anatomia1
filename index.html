@@ -1,0 +1,1108 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Misión Anatomía · Planos, ejes, movimientos y posiciones</title>
+<meta name="description" content="App de estudio de Anatomía Aplicada (1.º Bachillerato): posición anatómica, planos, ejes, movimientos y posiciones del paciente.">
+<style>
+:root{
+  --bg:#f4f1ea; --bg2:#fffdf8; --card:#ffffff; --ink:#1b1d2a; --mid:#555a6e; --soft:#8a8fa3; --line:#e2ddd2;
+  --ori:#e2543c; --pla:#2f7fd8; --eje:#1aa37a; --pos:#8a4fd8; --gold:#e8a317;
+  --ok:#178a55; --bad:#c23a2b; --okbg:#e3f5ec; --badbg:#fbe7e4;
+  --bodyfill:#f3e3d3; --bodystroke:#3b3340; --plane:rgba(47,127,216,.28);
+  --shadow:0 2px 0 rgba(27,29,42,.08),0 8px 24px rgba(27,29,42,.06);
+  --r:16px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#12131c; --bg2:#1a1c28; --card:#202334; --ink:#f1efe8; --mid:#b7b9c8; --soft:#8b8ea3; --line:#30344a;
+  --okbg:#13352a; --badbg:#3d1d1a; --ok:#4fd39a; --bad:#ff7a6a;
+  --bodyfill:#3a3346; --bodystroke:#e9dfd4; --plane:rgba(96,165,250,.32);
+  --shadow:0 2px 0 rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+}}
+:root[data-theme="dark"]{
+  --bg:#12131c; --bg2:#1a1c28; --card:#202334; --ink:#f1efe8; --mid:#b7b9c8; --soft:#8b8ea3; --line:#30344a;
+  --okbg:#13352a; --badbg:#3d1d1a; --ok:#4fd39a; --bad:#ff7a6a;
+  --bodyfill:#3a3346; --bodystroke:#e9dfd4; --plane:rgba(96,165,250,.32);
+  --shadow:0 2px 0 rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+button{font:inherit;color:inherit}
+a{color:inherit}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px 96px}
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topin{max-width:860px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px}
+.brand{font-weight:800;letter-spacing:-.02em;font-size:17px;display:flex;align-items:center;gap:8px;cursor:pointer;background:none;border:0;padding:0}
+.brand .logo{width:30px;height:30px;border-radius:9px;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:16px}
+.xpchip{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700}
+.xpbar{width:90px;height:8px;border-radius:9px;background:var(--line);overflow:hidden}
+.xpbar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),#f5c95a);width:0;transition:width .5s}
+.iconbtn{border:1px solid var(--line);background:var(--card);border-radius:10px;width:36px;height:36px;display:grid;place-items:center;cursor:pointer}
+h1{font-size:clamp(26px,6vw,38px);line-height:1.1;letter-spacing:-.03em;margin:22px 0 6px}
+h2{font-size:22px;letter-spacing:-.02em;margin:22px 0 8px}
+h3{font-size:17px;margin:16px 0 6px}
+p{margin:0 0 10px}
+.muted{color:var(--mid)}
+.small{font-size:13.5px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin:12px 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.hero{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+.count{text-align:center;background:var(--ink);color:var(--bg);border-radius:14px;padding:10px 14px;min-width:96px}
+.count b{display:block;font-size:30px;line-height:1}
+.count span{font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.mission{display:flex;gap:12px;align-items:center;text-align:left;width:100%;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;box-shadow:var(--shadow);cursor:pointer;position:relative;overflow:hidden;transition:transform .12s}
+.mission:hover{transform:translateY(-2px)}
+.mission .ic{flex:none;width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:26px;color:#fff}
+.mission .tt{font-weight:800;font-size:16.5px;line-height:1.2}
+.mission .ds{font-size:13.5px;color:var(--mid)}
+.mission .meter{display:block;height:6px;background:var(--line);border-radius:6px;margin-top:8px;overflow:hidden}
+.mission .meter i{display:block;height:100%}
+.medal{position:absolute;top:10px;right:12px;font-size:20px}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--line);color:var(--ink)}
+.tag.amp{background:transparent;border:1.5px dashed var(--soft);color:var(--mid)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer;background:var(--ink);color:var(--bg);min-height:46px}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.wide{width:100%}
+.btn:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.tool{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px;text-align:left;cursor:pointer;box-shadow:var(--shadow)}
+.tool b{display:block;font-size:15px}
+.tool span{font-size:12.5px;color:var(--mid)}
+.tool .e{font-size:22px}
+.back{background:none;border:0;padding:8px 0;font-weight:700;color:var(--mid);cursor:pointer}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 0 2px;scrollbar-width:none}
+.tabs button{flex:none;border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;font-weight:700;cursor:pointer;font-size:14px}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.box{border-radius:12px;padding:12px 14px;margin:10px 0;font-size:15px}
+.box.key{background:color-mix(in srgb,var(--gold) 16%,var(--card));border-left:5px solid var(--gold)}
+.box.warn{background:var(--badbg);border-left:5px solid var(--bad)}
+.box.amp{border:1.5px dashed var(--soft)}
+.box.clin{background:color-mix(in srgb,var(--pos) 12%,var(--card));border-left:5px solid var(--pos)}
+.box .lab{display:block;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;margin-bottom:3px}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin:8px 0}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mid)}
+.tablewrap{overflow-x:auto}
+svg{max-width:100%;height:auto;display:block}
+.bf{fill:var(--bodyfill);stroke:var(--bodystroke);stroke-width:1.6}
+.bl{stroke:var(--bodystroke);stroke-linecap:round;stroke-linejoin:round;fill:none}
+.blf{stroke:var(--bodyfill);stroke-linecap:round;stroke-linejoin:round;fill:none}
+.ink{stroke:var(--ink);fill:none;stroke-linecap:round;stroke-linejoin:round}
+.inkf{fill:var(--ink)}
+.txt{fill:var(--ink);font:700 12px system-ui,sans-serif}
+.txts{fill:var(--mid);font:500 10.5px system-ui,sans-serif}
+.bed{fill:var(--soft);opacity:.55}
+.fig{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:10px}
+input[type=range]{width:100%;accent-color:var(--pla);height:30px}
+.readout{font-weight:800;font-size:17px;margin:6px 0 2px}
+/* quiz */
+.qhead{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--mid);font-weight:700}
+.progress{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin:8px 0 14px}
+.progress i{display:block;height:100%;background:var(--ink);transition:width .3s}
+.qtext{font-size:19px;font-weight:800;line-height:1.3;margin:6px 0 12px}
+.opts{display:grid;gap:9px}
+.opt{border:2px solid var(--line);background:var(--card);border-radius:13px;padding:12px 14px;text-align:left;cursor:pointer;font-weight:600;min-height:50px;display:flex;align-items:center;gap:10px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt .k{flex:none;width:26px;height:26px;border-radius:8px;border:1.5px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:800}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}
+.opt.bad{border-color:var(--bad);background:var(--badbg)}
+.opt:disabled{cursor:default}
+.fb{border-radius:12px;padding:12px 14px;margin:12px 0;font-size:15px;animation:pop .25s ease}
+.fb.ok{background:var(--okbg);border-left:5px solid var(--ok)}
+.fb.bad{background:var(--badbg);border-left:5px solid var(--bad)}
+.fb b{display:block;margin-bottom:2px}
+@keyframes pop{from{transform:scale(.97);opacity:0}to{transform:none;opacity:1}}
+.combo{font-weight:800;color:var(--gold)}
+.big{font-size:44px;font-weight:900;letter-spacing:-.03em;line-height:1}
+.center{text-align:center}
+.xpfloat{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--gold);color:#201600;font-weight:900;padding:6px 14px;border-radius:999px;z-index:50;animation:float 1s ease forwards;pointer-events:none}
+@keyframes float{0%{opacity:0;transform:translate(-50%,10px)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-30px)}}
+/* flashcards */
+.flip{perspective:1000px;cursor:pointer;min-height:220px}
+.flip .in{position:relative;width:100%;min-height:220px;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border:1px solid var(--line);box-shadow:var(--shadow);background:var(--card)}
+.flip .b{transform:rotateY(180deg);background:var(--bg2)}
+.flip .f b{font-size:22px;line-height:1.25}
+.boxes{display:flex;gap:8px;justify-content:center;margin:10px 0}
+.boxes span{font-size:12px;font-weight:800;border:1.5px solid var(--line);border-radius:10px;padding:4px 10px}
+/* selectors for combo */
+.sel{display:grid;gap:6px;margin:8px 0}
+.sel .lbl{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mid)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:8px 13px;font-weight:700;cursor:pointer;font-size:14.5px}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.chip.ok{border-color:var(--ok);background:var(--okbg);color:var(--ink)}
+.chip.bad{border-color:var(--bad);background:var(--badbg);color:var(--ink)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px}
+.pcard{border:2px solid var(--line);background:var(--card);border-radius:13px;padding:8px;cursor:pointer;text-align:center;font-weight:700;font-size:13.5px}
+.pcard svg{margin:0 auto 4px}
+.pcard.ok{border-color:var(--ok);background:var(--okbg)}
+.pcard.bad{border-color:var(--bad);background:var(--badbg)}
+.pcard:disabled{cursor:default}
+.legend-mod{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+.myth{border:1px solid var(--line);border-radius:13px;background:var(--card);margin:9px 0;overflow:hidden}
+.myth button{width:100%;text-align:left;background:none;border:0;padding:13px 14px;font-weight:700;cursor:pointer;display:flex;gap:10px;align-items:flex-start}
+.myth .ans{padding:0 14px 13px 44px;display:none;color:var(--ink)}
+.myth.open .ans{display:block}
+.myth .x{flex:none;width:24px;height:24px;border-radius:7px;background:var(--badbg);color:var(--bad);display:grid;place-items:center;font-weight:900}
+.footer{margin-top:34px;font-size:12.5px;color:var(--soft);text-align:center}
+.confirm{display:none;margin-top:10px}
+.confirm.on{display:block}
+.levels{display:flex;flex-wrap:wrap;gap:6px}
+.levels span{font-size:12px;border:1.5px solid var(--line);border-radius:999px;padding:4px 10px;font-weight:700}
+.levels span.on{background:var(--gold);border-color:var(--gold);color:#201600}
+@media (max-width:440px){#lvlName{display:none}.brand span:last-child{font-size:15px}}
+.brand,.xpchip{white-space:nowrap}
+@media (max-width:520px){.hero{grid-template-columns:1fr}.count{justify-self:start}.qtext{font-size:17.5px}}
+:focus-visible{outline:3px solid var(--pla);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<style>
+.leg{stroke:var(--soft);stroke-width:3;fill:none}
+.head{fill:var(--card);stroke:var(--ink);stroke-width:2.2}
+.topbed{fill:var(--line);stroke:var(--soft);stroke-width:1}
+.backrest{stroke:var(--soft);stroke-width:7;opacity:.6}
+.ptx{fill:var(--ink);font:800 10px system-ui,sans-serif}
+.ink.soft{stroke:var(--soft)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#2f7fd8" stroke-width="2"/>
+    </pattern>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#e8a317"/>
+    </marker>
+    <marker id="ark" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888"/>
+    </marker>
+    <symbol id="body" viewBox="0 0 200 340">
+      <polyline class="bl" points="68,72 60,128 56,178" stroke-width="18"/>
+      <polyline class="bl" points="132,72 140,128 144,178" stroke-width="18"/>
+      <polyline class="bl" points="86,170 84,256 84,316" stroke-width="25"/>
+      <polyline class="bl" points="114,170 116,256 116,316" stroke-width="25"/>
+      <line class="bl" x1="100" y1="50" x2="100" y2="66" stroke-width="17"/>
+      <path class="bf" d="M68,64 Q100,56 132,64 L127,118 Q124,142 129,178 L71,178 Q76,142 73,118 Z"/>
+      <polyline class="blf" points="68,72 60,128 56,178" stroke-width="14.5"/>
+      <polyline class="blf" points="132,72 140,128 144,178" stroke-width="14.5"/>
+      <polyline class="blf" points="86,170 84,256 84,316" stroke-width="21.5"/>
+      <polyline class="blf" points="114,170 116,256 116,316" stroke-width="21.5"/>
+      <line class="blf" x1="100" y1="50" x2="100" y2="68" stroke-width="13.5"/>
+      <ellipse class="bf" cx="100" cy="30" rx="18" ry="22"/>
+      <ellipse class="bf" cx="55" cy="194" rx="8" ry="13"/>
+      <ellipse class="bf" cx="145" cy="194" rx="8" ry="13"/>
+      <line class="bl" x1="48" y1="186" x2="42" y2="197" stroke-width="4"/>
+      <line class="bl" x1="152" y1="186" x2="158" y2="197" stroke-width="4"/>
+      <ellipse class="bf" cx="82" cy="326" rx="12" ry="6"/>
+      <ellipse class="bf" cx="118" cy="326" rx="12" ry="6"/>
+    </symbol>
+    <!-- side view (facing right), viewBox 0 0 120 340 -->
+    <symbol id="side" viewBox="0 0 120 340">
+      <line class="bl" x1="60" y1="170" x2="62" y2="318" stroke-width="27"/>
+      <line class="bl" x1="58" y1="70" x2="56" y2="176" stroke-width="16"/>
+      <path class="bf" d="M42,64 Q60,56 76,66 Q86,110 78,178 L44,178 Q36,120 42,64 Z"/>
+      <line class="blf" x1="60" y1="170" x2="62" y2="318" stroke-width="23.5"/>
+      <line class="blf" x1="58" y1="70" x2="56" y2="176" stroke-width="12.5"/>
+      <ellipse class="bf" cx="60" cy="30" rx="19" ry="22"/>
+      <path class="bf" d="M77,26 L86,34 L77,37 Z"/>
+      <ellipse class="bf" cx="70" cy="326" rx="18" ry="6"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="topin">
+    <button class="brand" id="homeBtn" aria-label="Ir al inicio"><span class="logo">✚</span><span>Misión Anatomía</span></button>
+    <div class="xpchip" aria-live="polite"><span id="lvlName">Estudiante</span><div class="xpbar" aria-hidden="true"><i id="xpFill"></i></div><span id="xpNum">0 XP</span></div>
+    <button class="iconbtn" id="themeBtn" aria-label="Cambiar tema claro u oscuro">◐</button>
+  </div>
+</header>
+<main class="wrap" id="app" tabindex="-1"></main>
+<script>
+/* =========================================================
+   DATOS · Todo el contenido está aquí, separado de la lógica.
+   Fuentes de clase: presentación «Planos de movimiento y ejes»,
+   Genially «Planos anatómicos», apuntes «Tema 1. Introducción»
+   (1.9–1.11, Ana Molina) y ficha «Posiciones básicas del paciente»
+   (IES Gil y Carrasco). Lo marcado amp:true es ampliación.
+   ========================================================= */
+
+const EXAM_DATE = '2026-11-18';
+
+const MODS = {
+  ori: { name: 'Orientación', full: 'Posición anatómica y términos de orientación', icon: '🧭', color: 'var(--ori)', desc: 'El «punto cero» y el vocabulario para decir dónde está cada cosa.' },
+  pla: { name: 'Planos', full: 'Planos y secciones', icon: '🔪', color: 'var(--pla)', desc: 'Cómo «cortar» el cuerpo: sagital, frontal y transversal.' },
+  eje: { name: 'Ejes y movimientos', full: 'Ejes y movimientos', icon: '🔄', color: 'var(--eje)', desc: 'Alrededor de qué línea gira cada movimiento.' },
+  pos: { name: 'Posiciones', full: 'Posiciones del paciente', icon: '🛏️', color: 'var(--pos)', desc: 'Las 11 posturas de la cama y el quirófano.' }
+};
+
+const LEVELS = [
+  { xp: 0, name: 'Estudiante' },
+  { xp: 120, name: 'Interna' },
+  { xp: 320, name: 'Residente' },
+  { xp: 650, name: 'Especialista' },
+  { xp: 1000, name: 'Jefa de servicio' }
+];
+
+/* ---------- POSICIONES (pictogramas) ---------- */
+const POSITIONS = {
+  supino: { name: 'Decúbito supino', group: 'básica', look: 'Boca arriba, brazos y piernas extendidos junto al cuerpo.', use: 'Exploración médica y postoperados.' },
+  dorsal: { name: 'Decúbito dorsal', group: 'básica', look: 'Boca arriba con las rodillas flexionadas y los talones apoyados.', use: 'Relajar los músculos del abdomen.' },
+  lateral: { name: 'Decúbito lateral', group: 'básica', look: 'De costado, espalda recta, pierna de abajo extendida y la de arriba flexionada.', use: 'Enemas, exploraciones, higiene, masajes.' },
+  sims: { name: 'Posición de seguridad (Sims)', group: 'básica', look: 'Como la lateral pero girada hacia boca abajo (semiprona), pierna de arriba muy flexionada.', use: 'Pacientes inconscientes.' },
+  prono: { name: 'Decúbito prono (ventral)', group: 'básica', look: 'Boca abajo, sobre el abdomen, cabeza girada a un lado.', use: 'Operados de la zona dorsal (espalda).' },
+  fowler: { name: 'Fowler', group: 'básica', look: 'Semisentado, respaldo a 45°, rodillas algo flexionadas. Semi-Fowler 30°; Fowler alta 90°.', use: 'Problemas cardíacos o respiratorios; comer, leer.' },
+  trend: { name: 'Trendelenburg', group: 'quirúrgica', look: 'Boca arriba en camilla inclinada (45° según la ficha) con la cabeza más baja que los pies.', use: 'Cirugía de la zona pélvica, lipotimias (desmayos).' },
+  anti: { name: 'Antitrendelenburg (Morestin)', group: 'quirúrgica', look: 'Igual pero al revés: la cabeza más alta que los pies.', use: 'Problemas respiratorios, hernia de hiato.' },
+  roser: { name: 'Roser (Proetz)', group: 'quirúrgica', look: 'Boca arriba, hombros en el borde de la camilla y la cabeza colgando hacia atrás.', use: 'Otorrino, ojos, neurocirugía, intubación, lavar el pelo en cama.' },
+  lito: { name: 'Ginecológica (litotomía)', group: 'quirúrgica', look: 'Boca arriba, pelvis en el borde de la mesa, piernas flexionadas, separadas y apoyadas en perneras.', use: 'Exploración ginecológica, partos, sondaje vesical.' },
+  genu: { name: 'Genupectoral', group: 'quirúrgica', look: 'De rodillas, tronco inclinado, pecho y cabeza apoyados sobre los brazos.', use: 'Exploraciones rectales, enemas.' }
+};
+
+/* ---------- GESTOS para el reto «Plano + eje» ---------- */
+const GESTURES = [
+  { g: 'Curl de bíceps (doblar el codo con una pesa)', p: 'Sagital', e: 'Transversal', m: 'Flexión / extensión', why: 'El antebrazo sube y baja hacia delante: plano sagital, girando alrededor del eje transversal que atraviesa el codo de lado a lado.' },
+  { g: 'Salto de estrella (abrir y cerrar brazos y piernas)', p: 'Frontal', e: 'Sagital', m: 'Abducción / aducción', why: 'Brazos y piernas se separan hacia los lados: plano frontal, alrededor del eje sagital (anteroposterior).' },
+  { g: 'Lanzamiento de disco (giro del tronco)', p: 'Transversal', e: 'Longitudinal', m: 'Rotación', why: 'El tronco gira sobre sí mismo: plano transversal, alrededor del eje longitudinal (de arriba abajo).' },
+  { g: 'Voltereta hacia delante', p: 'Sagital', e: 'Transversal', m: 'Flexión / extensión', why: 'Todo el cuerpo rueda hacia delante alrededor de un eje que va de lado a lado.' },
+  { g: 'Rueda lateral', p: 'Frontal', e: 'Sagital', m: 'Abducción / aducción', why: 'El cuerpo gira de lado, en el plano frontal, alrededor de un eje que lo atraviesa de delante atrás.' },
+  { g: 'Giro de patinaje artístico', p: 'Transversal', e: 'Longitudinal', m: 'Rotación', why: 'La patinadora gira sobre sí misma alrededor de su eje longitudinal.' },
+  { g: 'Chutar un balón (la pierna va hacia delante)', p: 'Sagital', e: 'Transversal', m: 'Flexión / extensión', why: 'La cadera se flexiona hacia delante: plano sagital, eje transversal.' },
+  { g: 'Elevación lateral de brazos con mancuernas', p: 'Frontal', e: 'Sagital', m: 'Abducción / aducción', why: 'Los brazos se separan del cuerpo hacia los lados: abducción en el plano frontal.' },
+  { g: 'Girar la cabeza para decir «no»', p: 'Transversal', e: 'Longitudinal', m: 'Rotación', why: 'La cabeza gira sobre el eje vertical del cuello.' },
+  { g: 'Swing de golf (torsión del tronco)', p: 'Transversal', e: 'Longitudinal', m: 'Rotación', why: 'El tronco se tuerce alrededor del eje longitudinal.' },
+  { g: 'Sentadilla (bajar doblando las rodillas)', p: 'Sagital', e: 'Transversal', m: 'Flexión / extensión', why: 'Rodillas y caderas se flexionan hacia delante y atrás: plano sagital.' },
+  { g: 'Decir «sí» con la cabeza', p: 'Sagital', e: 'Transversal', m: 'Flexión / extensión', why: 'La cabeza se inclina hacia delante y atrás alrededor de un eje de lado a lado.' }
+];
+
+/* ---------- TÉCNICAS para el reto «Quirófano» (ficha de clase) ---------- */
+const TECHS = [
+  { t: 'Paciente inconsciente', a: ['sims'], why: 'La posición de seguridad evita que, si vomita, el contenido pase a la vía respiratoria.' },
+  { t: 'Paciente con asma', a: ['fowler'], why: 'Semisentado respira mejor: las vísceras bajan y el diafragma se mueve con más facilidad.' },
+  { t: 'Cirugía pélvica', a: ['trend'], why: 'Con la cabeza abajo, las vísceras se desplazan hacia el tórax y despejan la pelvis.' },
+  { t: 'Partos', a: ['lito'], why: 'La ficha indica la ginecológica o de litotomía para partos.' },
+  { t: 'Intubación endotraqueal', a: ['roser'], why: 'La cabeza colgando extiende el cuello y alinea boca y tráquea.' },
+  { t: 'Exploraciones proctológicas (recto)', a: ['genu'], why: 'La genupectoral se usa para exploraciones rectales.' },
+  { t: 'Intervención en la columna', a: ['prono'], why: 'Boca abajo queda accesible la espalda: operados de la zona dorsal.' },
+  { t: 'Cambio de ropa a un paciente encamado', a: ['lateral'], why: 'El decúbito lateral se usa para higiene y cuidados en la cama.' },
+  { t: 'Cirugía del diafragma y del abdomen superior', a: ['anti'], why: 'Con la cabeza arriba, las vísceras bajan y dejan libre la parte alta del abdomen.' },
+  { t: 'Operación de bocio (tiroides, en el cuello)', a: ['roser'], why: 'El cuello en hiperextensión deja expuesto el tiroides.' },
+  { t: 'Extirpación del apéndice', a: ['supino'], why: 'Boca arriba, con el abdomen accesible.' },
+  { t: 'Colocación de sonda rectal', a: ['lateral', 'sims', 'genu'], why: 'La ficha usa el lateral para enemas; también valen Sims o genupectoral.' },
+  { t: 'Examinar la próstata', a: ['genu', 'lateral'], why: 'Es una exploración rectal: genupectoral (o lateral).' },
+  { t: 'Niño con tos persistente que no se puede incorporar', a: ['anti'], why: 'Eleva la cabeza para respirar mejor sin tener que sentarlo.' },
+  { t: 'Cirugía en la cara', a: ['supino', 'roser'], why: 'La cara queda accesible boca arriba; Roser si interesa extender el cuello.' },
+  { t: 'Paciente con hernia de hiato', a: ['anti'], why: 'La ficha indica la Antitrendelenburg para la hernia de hiato.' },
+  { t: 'Relajar la musculatura del abdomen para explorarlo', a: ['dorsal'], why: 'Con las rodillas flexionadas, el abdomen se relaja.' },
+  { t: 'Paciente que se ha desmayado (lipotimia)', a: ['trend'], why: 'La ficha indica Trendelenburg para lipotimias: llega más sangre al cerebro.' }
+];
+
+/* ---------- PREGUNTAS ---------- */
+/* fig: nombre de pictograma de POSITIONS para mostrar un dibujo */
+const QUESTIONS = [
+  // ---- ORIENTACIÓN
+  { m:'ori', q:'En posición anatómica, ¿hacia dónde miran las palmas de las manos?', o:['Hacia delante','Hacia los muslos','Hacia atrás','Hacia arriba'], a:0, e:'Palmas hacia delante, con los pulgares hacia fuera. Es lo que la diferencia de la posición de «firmes».' },
+  { m:'ori', q:'¿Cuál de estas descripciones es la posición anatómica?', o:['De pie, de frente, brazos a los lados y palmas hacia delante','Tumbado boca arriba con los brazos junto al cuerpo','De pie con las palmas pegadas a los muslos','Sentado con la espalda recta'], a:0, e:'Es de pie. Tumbado boca arriba es el decúbito supino, que es otra cosa.' },
+  { m:'ori', q:'«Las orejas son ______ a la nariz».', o:['laterales','mediales','proximales','profundas'], a:0, e:'Lateral = lejos de la línea media. La nariz está en la línea media; las orejas, a los lados.' },
+  { m:'ori', q:'«La nariz es ______ a los ojos».', o:['medial','lateral','distal','posterior'], a:0, e:'Medial = más cerca de la línea media.' },
+  { m:'ori', q:'«El codo es ______ a la muñeca».', o:['proximal','distal','medial','caudal'], a:0, e:'Proximal = más cerca del tronco, en una extremidad. El codo está más cerca del hombro que la muñeca.' },
+  { m:'ori', q:'«Los dedos del pie son ______ a la rodilla».', o:['distales','proximales','superiores','mediales'], a:0, e:'Distal = más lejos del tronco, en una extremidad.' },
+  { m:'ori', q:'«El esternón es ______ al corazón».', o:['anterior (ventral)','posterior (dorsal)','lateral','profundo'], a:0, e:'El esternón está delante del corazón: anterior o ventral.' },
+  { m:'ori', q:'«La columna vertebral es ______ al estómago».', o:['posterior (dorsal)','anterior (ventral)','medial','superficial'], a:0, e:'La columna está detrás: posterior o dorsal.' },
+  { m:'ori', q:'¿Qué término es sinónimo de «superior»?', o:['Craneal','Caudal','Ventral','Proximal'], a:0, e:'Craneal = hacia la cabeza (cráneo). Caudal = hacia la «cola», es decir, inferior.' },
+  { m:'ori', q:'¿Qué término es sinónimo de «inferior»?', o:['Caudal','Craneal','Dorsal','Medial'], a:0, e:'Caudal viene de «cauda», cola: alejado de la cabeza.' },
+  { m:'ori', q:'«La piel es ______ a los músculos».', o:['superficial','profunda','proximal','medial'], a:0, e:'Superficial = más cerca de la superficie. Lo de dentro es profundo.' },
+  { m:'ori', q:'¿Dónde se usan propiamente los términos proximal y distal?', o:['En las extremidades','En la cabeza','En el tronco','En cualquier órgano interno'], a:0, e:'Proximal y distal se usan en las extremidades: más cerca o más lejos del tronco. En el tronco se dice superior e inferior.' },
+  { m:'ori', q:'En el cítrico cortado del Genially, ¿qué parte es la profunda?', o:['El centro','La cáscara','La parte de arriba','La parte de abajo'], a:0, e:'Profundo = lejos de la superficie. La cáscara es superficial.' },
+  { m:'ori', q:'En la hormiga del Genially, ¿cómo se llama el extremo de su abdomen?', o:['Caudal','Craneal','Proximal','Ventral'], a:0, e:'Es el extremo más alejado de la cabeza: caudal.' },
+  { m:'ori', q:'En un ser humano de pie, «ventral» equivale a…', o:['Anterior','Posterior','Superior','Lateral'], a:0, e:'Ventral = vientre = delante. Dorsal = dorso = detrás.' },
+  { m:'ori', q:'¿Para qué sirve la posición anatómica?', o:['Es la referencia común para describir el cuerpo y sus direcciones','Es la postura para operar','Es la mejor postura para dormir','Solo se usa en radiografías'], a:0, e:'Salvo que se diga lo contrario, todo se describe como si el cuerpo estuviera en posición anatómica, aunque esté tumbado.' },
+
+  // ---- PLANOS
+  { m:'pla', q:'¿Qué plano divide el cuerpo en parte derecha e izquierda?', o:['Sagital','Frontal','Transversal','Oblicuo'], a:0, e:'El sagital es vertical y va de delante hacia atrás: separa derecha de izquierda.' },
+  { m:'pla', q:'¿Qué plano divide el cuerpo en parte anterior y posterior?', o:['Frontal (coronal)','Sagital','Transversal','Sagital medio'], a:0, e:'El frontal es vertical, de lado a lado, paralelo a la frente.' },
+  { m:'pla', q:'¿Qué plano divide el cuerpo en parte superior e inferior?', o:['Transversal (horizontal)','Frontal','Sagital','Coronal'], a:0, e:'El transversal es horizontal, paralelo al suelo.' },
+  { m:'pla', q:'¿Qué diferencia al plano sagital medio de otro sagital cualquiera?', o:['Pasa por la línea media y da dos mitades iguales','Es horizontal','Separa delante de detrás','Es inclinado'], a:0, e:'Todos los sagitales separan derecha de izquierda, pero solo el medio (mediano) da dos mitades iguales. Los demás son parasagitales.' },
+  { m:'pla', q:'¿Cuál es otro nombre del plano frontal?', o:['Coronal','Axial','Mediano','Longitudinal'], a:0, e:'Coronal, porque sigue la sutura coronal del cráneo, entre el hueso frontal y los parietales.' },
+  { m:'pla', q:'En radiología, el plano transversal se llama…', o:['Axial','Coronal','Sagital','Oblicuo'], a:0, e:'Axial: es el corte típico del TAC.' },
+  { m:'pla', q:'Abres un bollo en «tapa y base» para hacerte un bocadillo. ¿Qué plano usaste?', o:['Transversal','Sagital medio','Frontal','Oblicuo'], a:0, e:'Separas la parte de arriba de la de abajo: plano transversal.' },
+  { m:'pla', q:'Separas la cabeza de una muñeca rusa de su cuerpo. ¿Cómo se llaman las dos partes?', o:['Superior (craneal) e inferior (caudal)','Anterior y posterior','Derecha e izquierda','Proximal y distal'], a:0, e:'Es un corte transversal: deja una parte superior o craneal y otra inferior o caudal.' },
+  { m:'pla', q:'Separas la cara de una figura de su espalda. ¿Qué plano usaste?', o:['Frontal (coronal)','Sagital','Transversal','Sagital medio'], a:0, e:'Queda una parte anterior (ventral) y otra posterior (dorsal): plano frontal.' },
+  { m:'pla', q:'Partes un limón justo por la mitad, en dos mitades derecha e izquierda iguales. ¿Qué plano?', o:['Sagital medio','Transversal','Frontal','Parasagital'], a:0, e:'Derecha/izquierda e iguales: sagital medio.' },
+  { m:'pla', q:'¿Cómo son entre sí los tres planos principales?', o:['Perpendiculares (forman ángulos rectos)','Paralelos','Siempre inclinados','Coinciden en la cabeza'], a:0, e:'Los tres planos forman ángulos rectos entre sí, porque el cuerpo tiene tres dimensiones.' },
+  { m:'pla', q:'Un corte inclinado que combina dos planos es un plano…', o:['Oblicuo','Coronal','Mediano','Axial'], a:0, e:'Los apuntes lo definen como «alguna combinación de otros 2 planos».' },
+  { m:'pla', q:'Una diapositiva pregunta «¿por qué eje hemos cortado?». ¿Qué es lo correcto?', o:['Se corta por un plano; el eje es una línea de giro','Se corta por un eje','Plano y eje son lo mismo','Los cortes solo se hacen por ejes'], a:0, e:'Un plano es una superficie, así que corta. Un eje es una línea: sirve para describir giros. En el examen nombra el plano.' },
+  { m:'pla', q:'¿Qué es una «sección»?', o:['La superficie que queda a la vista al cortar por un plano','Una línea de giro','Una posición del paciente','Un término de orientación'], a:0, e:'Cuando se observa el interior del cuerpo, lo que se ve es una sección o corte.' },
+  { m:'pla', q:'Un corte sagital que no pasa por la línea media deja…', o:['Una parte derecha y otra izquierda de distinto tamaño','Dos mitades iguales','Una parte de arriba y otra de abajo','Una parte de delante y otra de detrás'], a:0, e:'Es un plano parasagital (o paramediano): sigue separando derecha de izquierda, pero desiguales.' },
+
+  // ---- EJES Y MOVIMIENTOS
+  { m:'eje', q:'¿Qué es un eje?', o:['La línea alrededor de la cual gira un movimiento','Una superficie que divide el cuerpo','Un corte del cuerpo','Una posición del paciente'], a:0, e:'El plano describe la superficie; el eje, la línea de giro.' },
+  { m:'eje', q:'Los movimientos del plano sagital giran alrededor del eje…', o:['Transversal','Sagital','Longitudinal','Frontal'], a:0, e:'Plano sagital ↔ eje transversal, que atraviesa el cuerpo de lado a lado «como una barra que atraviesa la cintura».' },
+  { m:'eje', q:'Los movimientos del plano frontal giran alrededor del eje…', o:['Sagital (anteroposterior)','Transversal','Longitudinal','Coronal'], a:0, e:'Plano frontal ↔ eje sagital, que atraviesa el cuerpo de delante hacia atrás. ¡Ojo, nombres cruzados!' },
+  { m:'eje', q:'Los movimientos del plano transversal giran alrededor del eje…', o:['Longitudinal','Transversal','Sagital','Anteroposterior'], a:0, e:'Plano transversal ↔ eje longitudinal o vertical, de arriba abajo.' },
+  { m:'eje', q:'¿Qué movimientos ocurren en el plano sagital?', o:['Flexión y extensión','Abducción y aducción','Rotación','Ninguno'], a:0, e:'Movimientos hacia delante y hacia atrás: flexión y extensión.' },
+  { m:'eje', q:'¿A qué plano pertenecen la abducción y la aducción?', o:['Frontal','Sagital','Transversal','A ninguno'], a:0, e:'Es uno de los errores que avisa la profesora: abducción y aducción son del plano frontal.' },
+  { m:'eje', q:'¿Qué es la abducción?', o:['Alejar un segmento de la línea media','Acercarlo a la línea media','Doblar una articulación','Girar sobre el eje longitudinal'], a:0, e:'Ab- = separar. Separar el brazo hacia un lado es abducción.' },
+  { m:'eje', q:'¿Qué es la aducción?', o:['Acercar un segmento a la línea media','Alejarlo de la línea media','Estirar una articulación','Girar el tronco'], a:0, e:'Ad- = hacia. Volver a pegar el brazo al cuerpo es aducción.' },
+  { m:'eje', q:'¿Qué es la flexión?', o:['Doblar: se cierra el ángulo de la articulación','Estirar: se abre el ángulo','Separar de la línea media','Girar sobre sí mismo'], a:0, e:'Doblar el codo o subir la rodilla son flexiones.' },
+  { m:'eje', q:'Un curl de bíceps es una flexión del codo. ¿En qué plano y eje?', o:['Plano sagital, eje transversal','Plano frontal, eje sagital','Plano transversal, eje longitudinal','Plano sagital, eje sagital'], a:0, e:'Es uno de los ejemplos de la presentación de clase.' },
+  { m:'eje', q:'El salto de estrella combina abducción y aducción. ¿Plano y eje?', o:['Plano frontal, eje sagital','Plano sagital, eje transversal','Plano transversal, eje longitudinal','Plano frontal, eje frontal'], a:0, e:'Brazos y piernas se abren hacia los lados: plano frontal, eje anteroposterior (sagital).' },
+  { m:'eje', q:'En el lanzamiento de disco el tronco gira. ¿Plano y eje?', o:['Plano transversal, eje longitudinal','Plano sagital, eje transversal','Plano frontal, eje sagital','Plano transversal, eje transversal'], a:0, e:'Es una rotación: plano transversal, eje longitudinal.' },
+  { m:'eje', q:'Una voltereta hacia delante gira alrededor del eje…', o:['Transversal','Longitudinal','Sagital','Ninguno'], a:0, e:'El cuerpo rota hacia delante en el plano sagital, alrededor del eje transversal.' },
+  { m:'eje', q:'Una rueda lateral gira alrededor del eje…', o:['Sagital','Transversal','Longitudinal','Frontal'], a:0, e:'El cuerpo se mueve de lado (plano frontal) girando sobre el eje sagital.' },
+  { m:'eje', q:'¿Cuál de estos errores avisa la profesora?', o:['Nombrar solo el plano o solo el eje','Usar dos palabras para describir un movimiento','Relacionar la rotación con el eje longitudinal','Usar ejemplos deportivos'], a:0, e:'Hay que describir cada movimiento con dos palabras: plano y eje.' },
+  { m:'eje', q:'¿Todo movimiento ocurre en un solo plano?', o:['No: muchos gestos combinan varios planos','Sí, siempre','Solo los del tronco','Solo los de las piernas'], a:0, e:'Asumir que todo ocurre en un solo plano es otro error típico. Un paso de baile suele combinar varios.' },
+  { m:'eje', q:'Girar la cabeza para decir «no» es una…', o:['Rotación (plano transversal, eje longitudinal)','Flexión (plano sagital)','Abducción (plano frontal)','Extensión (plano frontal)'], a:0, e:'La cabeza gira sobre el eje vertical.' },
+  { m:'eje', q:'Elevar los brazos hacia los lados con mancuernas es…', o:['Abducción','Aducción','Flexión','Rotación'], a:0, e:'Los brazos se separan del cuerpo hacia los costados.' },
+  { m:'eje', q:'El eje transversal va…', o:['De lado a lado','De delante hacia atrás','De arriba abajo','En diagonal'], a:0, e:'Atraviesa el cuerpo de un costado al otro.' },
+  { m:'eje', q:'El eje longitudinal va…', o:['De arriba abajo','De lado a lado','De delante hacia atrás','En diagonal'], a:0, e:'Recorre el cuerpo de la cabeza a los pies.' },
+
+  // ---- POSICIONES
+  { m:'pos', fig:'supino', q:'¿Qué posición es esta?', o:['Decúbito supino','Decúbito prono','Decúbito dorsal','Fowler'], a:0, e:'Boca arriba y todo estirado: decúbito supino.' },
+  { m:'pos', fig:'dorsal', q:'¿Qué posición es esta?', o:['Decúbito dorsal','Decúbito supino','Litotomía','Genupectoral'], a:0, e:'Boca arriba pero con las rodillas flexionadas: decúbito dorsal.' },
+  { m:'pos', fig:'prono', q:'¿Qué posición es esta?', o:['Decúbito prono','Decúbito supino','Decúbito lateral','Roser'], a:0, e:'Boca abajo, sobre el abdomen: decúbito prono o ventral.' },
+  { m:'pos', fig:'fowler', q:'¿Qué posición es esta?', o:['Fowler','Antitrendelenburg','Trendelenburg','Decúbito dorsal'], a:0, e:'Semisentado con el respaldo levantado a 45°: Fowler. En la Antitrendelenburg se inclina toda la camilla, no solo el respaldo.' },
+  { m:'pos', fig:'trend', q:'¿Qué posición es esta?', o:['Trendelenburg','Antitrendelenburg','Fowler','Roser'], a:0, e:'Camilla inclinada con la cabeza más baja que los pies.' },
+  { m:'pos', fig:'anti', q:'¿Qué posición es esta?', o:['Antitrendelenburg','Trendelenburg','Fowler','Decúbito supino'], a:0, e:'Camilla inclinada con la cabeza más alta que los pies: Antitrendelenburg o Morestin.' },
+  { m:'pos', fig:'roser', q:'¿Qué posición es esta?', o:['Roser (Proetz)','Trendelenburg','Decúbito supino','Litotomía'], a:0, e:'Los hombros en el borde y la cabeza colgando: Roser.' },
+  { m:'pos', fig:'lito', q:'¿Qué posición es esta?', o:['Ginecológica (litotomía)','Decúbito dorsal','Fowler','Genupectoral'], a:0, e:'Piernas flexionadas, separadas y apoyadas en perneras.' },
+  { m:'pos', fig:'genu', q:'¿Qué posición es esta?', o:['Genupectoral','Decúbito prono','Posición de seguridad','Decúbito lateral'], a:0, e:'Genu = rodilla, pectoral = pecho: de rodillas y con el pecho apoyado.' },
+  { m:'pos', fig:'sims', q:'¿Qué posición es esta? (vista desde arriba)', o:['Posición de seguridad (Sims)','Decúbito supino','Fowler','Roser'], a:0, e:'De costado y girada hacia boca abajo, con la pierna de arriba muy flexionada.' },
+  { m:'pos', fig:'lateral', q:'¿Qué posición es esta? (vista desde arriba)', o:['Decúbito lateral','Decúbito prono','Litotomía','Trendelenburg'], a:0, e:'De costado, con la pierna de arriba flexionada y la de abajo estirada.' },
+  { m:'pos', q:'¿Para qué sirven sobre todo las posiciones básicas en pacientes encamados?', o:['Para evitar las úlceras por presión (UPP)','Para operar','Para hacer radiografías','Para hacer deporte'], a:0, e:'Cambiar de posición a quien no se mueve evita las úlceras por presión.' },
+  { m:'pos', q:'¿Con qué inclinación del respaldo se describe la posición de Fowler en la ficha?', o:['45°','15°','90°','0°'], a:0, e:'Fowler 45°; semi-Fowler 30°; Fowler alta 90°.' },
+  { m:'pos', q:'¿Qué diferencia hay entre decúbito supino y decúbito dorsal?', o:['En el dorsal las rodillas están flexionadas','El dorsal es boca abajo','El supino es de costado','No hay diferencia'], a:0, e:'Los dos son boca arriba; la diferencia está en las piernas.' },
+  { m:'pos', q:'¿Qué posición pondrías a un paciente inconsciente?', o:['Posición de seguridad (Sims)','Decúbito supino','Fowler','Trendelenburg'], a:0, e:'Así, si vomita, el contenido sale por la boca y no pasa a la vía respiratoria.' },
+  { m:'pos', q:'¿Qué posición es mejor para un paciente con dificultad para respirar?', o:['Fowler','Decúbito prono','Trendelenburg','Genupectoral'], a:0, e:'Semisentado respira mejor.' },
+  { m:'pos', q:'¿En qué posición se coloca a una mujer para un parto, según la ficha?', o:['Ginecológica (litotomía)','Genupectoral','Roser','Decúbito lateral'], a:0, e:'La litotomía se usa en exploraciones ginecológicas y partos.' },
+  { m:'pos', q:'¿Qué posición se usa para la intubación endotraqueal?', o:['Roser','Fowler','Genupectoral','Decúbito prono'], a:0, e:'Con la cabeza colgando, el cuello se extiende y facilita la intubación.' },
+  { m:'pos', q:'¿Qué posición se usa en la cirugía de la columna?', o:['Decúbito prono','Decúbito supino','Fowler','Litotomía'], a:0, e:'Boca abajo, con la espalda accesible.' },
+  { m:'pos', q:'¿En qué se diferencia la posición anatómica del decúbito supino?', o:['La anatómica es de pie; el supino, tumbado boca arriba','Son la misma','El supino es de pie','La anatómica es boca abajo'], a:0, e:'Error muy típico en el examen.' }
+];
+
+/* ---------- TARJETAS DE MEMORIA ---------- */
+const CARDS = [
+  { m:'ori', f:'Posición anatómica', b:'De pie, de frente, mirada al frente, pies apoyados, brazos a los lados y <b>palmas hacia delante</b>.' },
+  { m:'ori', f:'Superior · craneal', b:'Hacia la cabeza.' },
+  { m:'ori', f:'Inferior · caudal', b:'Alejado de la cabeza.' },
+  { m:'ori', f:'Anterior · ventral', b:'Hacia delante.' },
+  { m:'ori', f:'Posterior · dorsal', b:'Hacia atrás.' },
+  { m:'ori', f:'Medial', b:'Cerca de la línea media.' },
+  { m:'ori', f:'Lateral', b:'Lejos de la línea media.' },
+  { m:'ori', f:'Proximal', b:'En una extremidad, más cerca del tronco.' },
+  { m:'ori', f:'Distal', b:'En una extremidad, más lejos del tronco.' },
+  { m:'ori', f:'Superficial / profundo', b:'Cerca de la superficie / lejos de la superficie.' },
+  { m:'pla', f:'Plano', b:'Superficie imaginaria que divide el cuerpo o un órgano.' },
+  { m:'pla', f:'Sección', b:'La superficie que queda a la vista al cortar por un plano.' },
+  { m:'pla', f:'Plano sagital', b:'Divide en <b>derecha e izquierda</b>.' },
+  { m:'pla', f:'Plano sagital medio', b:'Pasa por la línea media: <b>dos mitades iguales</b>.' },
+  { m:'pla', f:'Plano frontal (coronal)', b:'Divide en <b>anterior y posterior</b>.' },
+  { m:'pla', f:'Plano transversal (horizontal, axial)', b:'Divide en <b>superior e inferior</b>.' },
+  { m:'pla', f:'Plano oblicuo', b:'Combinación de dos planos: corte inclinado.' },
+  { m:'eje', f:'Eje', b:'Línea alrededor de la cual se produce el movimiento.' },
+  { m:'eje', f:'Plano sagital → eje…', b:'<b>Transversal</b> (de lado a lado). Flexión y extensión.' },
+  { m:'eje', f:'Plano frontal → eje…', b:'<b>Sagital</b> o anteroposterior. Abducción y aducción.' },
+  { m:'eje', f:'Plano transversal → eje…', b:'<b>Longitudinal</b> (de arriba abajo). Rotación.' },
+  { m:'eje', f:'Flexión / extensión', b:'Doblar (cerrar el ángulo) / estirar.' },
+  { m:'eje', f:'Abducción / aducción', b:'Alejar de la línea media / acercar.' },
+  { m:'eje', f:'Rotación', b:'Girar un segmento sobre su eje longitudinal.' },
+  { m:'pos', f:'Decúbito supino', b:'Boca arriba, todo estirado. Exploración, postoperados.' },
+  { m:'pos', f:'Decúbito dorsal', b:'Boca arriba, rodillas flexionadas. Relaja el abdomen.' },
+  { m:'pos', f:'Decúbito lateral', b:'De costado, pierna de arriba flexionada. Higiene, enemas.' },
+  { m:'pos', f:'Posición de seguridad (Sims)', b:'Semiprona. Pacientes inconscientes.' },
+  { m:'pos', f:'Decúbito prono', b:'Boca abajo. Operados de la espalda.' },
+  { m:'pos', f:'Fowler', b:'Semisentado 45° (semi 30°, alta 90°). Respiratorios, cardíacos.' },
+  { m:'pos', f:'Trendelenburg', b:'Inclinado, <b>cabeza abajo</b>. Cirugía pélvica, lipotimias.' },
+  { m:'pos', f:'Antitrendelenburg (Morestin)', b:'Inclinado, <b>cabeza arriba</b>. Respiratorios, hernia de hiato.' },
+  { m:'pos', f:'Roser (Proetz)', b:'Cabeza colgando fuera de la camilla. Intubación, otorrino, ojos.' },
+  { m:'pos', f:'Ginecológica (litotomía)', b:'Piernas en perneras. Ginecología, partos, sondaje vesical.' },
+  { m:'pos', f:'Genupectoral', b:'Rodillas y pecho apoyados. Exploración rectal, enemas.' },
+  { m:'pos', f:'Úlceras por presión (UPP)', b:'Lo que se evita cambiando de posición al paciente encamado.' }
+];
+
+/* ---------- MITOS / ERRORES ---------- */
+const MYTHS = [
+  { x:'La posición anatómica es estar tumbado boca arriba.', v:'No: es <b>de pie</b>, con las palmas hacia delante. Tumbado boca arriba es el <b>decúbito supino</b>.' },
+  { x:'El plano sagital va con el eje sagital.', v:'No: plano sagital ↔ eje <b>transversal</b>. El eje sagital va con el plano <b>frontal</b>.' },
+  { x:'La abducción ocurre en el plano sagital.', v:'No: abducción y aducción son del plano <b>frontal</b>.' },
+  { x:'Cualquier plano sagital da dos mitades iguales.', v:'Solo el <b>sagital medio</b>. Los demás (parasagitales) dan partes desiguales.' },
+  { x:'Se puede cortar el cuerpo «por un eje».', v:'Se corta por un <b>plano</b>, que es una superficie. El eje es una línea de giro.' },
+  { x:'Basta con decir el plano de un movimiento.', v:'Hay que decir <b>plano y eje</b>: «flexión del codo, plano sagital, eje transversal».' },
+  { x:'Todo movimiento ocurre en un solo plano.', v:'Muchos gestos combinan varios planos, como un paso de baile.' },
+  { x:'Proximal y distal sirven para todo el cuerpo.', v:'Se usan en las <b>extremidades</b>. En el tronco, superior e inferior.' },
+  { x:'Supino y dorsal son lo mismo.', v:'Los dos son boca arriba, pero en el <b>dorsal</b> las rodillas están flexionadas.' },
+  { x:'En Trendelenburg la cabeza queda arriba.', v:'Al revés: en Trendelenburg la <b>cabeza está más baja</b> que los pies. Arriba es la <b>Anti</b>trendelenburg.' },
+  { x:'Fowler y Antitrendelenburg son iguales.', v:'En Fowler se levanta solo el <b>respaldo</b> (semisentado). En Antitrendelenburg se inclina <b>toda la camilla</b>.' },
+  { x:'«Plano longitudinal» y «eje longitudinal» son lo mismo.', v:'Los apuntes llaman al plano sagital «también longitudinal», pero el <b>eje longitudinal</b> es el vertical de la rotación. No los mezcles.' }
+];
+
+</script>
+<script>
+/* =========================================================
+   LÓGICA DE LA APP
+   ========================================================= */
+(function () {
+'use strict';
+
+/* ---------- almacenamiento seguro ---------- */
+const KEY = 'misionAnatomia.v1';
+const DEF = { xp: 0, best: {}, leit: {}, done: {}, theme: null, streakBest: 0 };
+let S;
+function load() {
+  try { const raw = localStorage.getItem(KEY); S = raw ? Object.assign({}, DEF, JSON.parse(raw)) : Object.assign({}, DEF); }
+  catch (e) { S = Object.assign({}, DEF); }
+  S.best = S.best || {}; S.leit = S.leit || {}; S.done = S.done || {};
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* sin guardado */ } }
+load();
+
+/* ---------- utilidades ---------- */
+const $ = (sel, el) => (el || document).querySelector(sel);
+const app = $('#app');
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+function level() { let l = LEVELS[0], n = null; for (let i = 0; i < LEVELS.length; i++) { if (S.xp >= LEVELS[i].xp) { l = LEVELS[i]; n = LEVELS[i + 1] || null; } } return { l, n }; }
+function renderXP() {
+  const { l, n } = level();
+  $('#lvlName').textContent = l.name;
+  $('#xpNum').textContent = S.xp + ' XP';
+  const pct = n ? Math.round((S.xp - l.xp) / (n.xp - l.xp) * 100) : 100;
+  $('#xpFill').style.width = pct + '%';
+}
+function addXP(n, label) {
+  const before = level().l.name;
+  S.xp += n; save(); renderXP();
+  const f = document.createElement('div'); f.className = 'xpfloat'; f.textContent = '+' + n + ' XP' + (label ? ' · ' + label : '');
+  document.body.appendChild(f); setTimeout(() => f.remove(), 1000);
+  const after = level().l.name;
+  if (after !== before) setTimeout(() => toastLevel(after), 600);
+}
+function toastLevel(name) {
+  const f = document.createElement('div'); f.className = 'xpfloat'; f.style.top = '110px'; f.textContent = '🏅 ¡Subes de nivel: ' + name + '!';
+  document.body.appendChild(f); setTimeout(() => f.remove(), 1600);
+}
+
+/* ---------- tema ---------- */
+function applyTheme() { if (S.theme) document.documentElement.setAttribute('data-theme', S.theme); else document.documentElement.removeAttribute('data-theme'); }
+applyTheme();
+$('#themeBtn').addEventListener('click', () => {
+  const dark = S.theme ? S.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  S.theme = dark ? 'light' : 'dark'; save(); applyTheme();
+});
+$('#homeBtn').addEventListener('click', () => go('home'));
+
+/* ---------- pictogramas de posiciones ---------- */
+const BED = '<rect class="bed" x="10" y="62" width="180" height="7"/><line class="leg" x1="20" y1="69" x2="20" y2="84"/><line class="leg" x1="180" y1="69" x2="180" y2="84"/>';
+const L = (x1, y1, x2, y2, w) => `<line class="ink" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke-width="${w}"/>`;
+const P = (pts, w, c) => `<polyline class="${c || 'ink'}" points="${pts}" stroke-width="${w}"/>`;
+const H = (x, y) => `<circle class="head" cx="${x}" cy="${y}" r="9"/>`;
+const SUPBODY = L(38,53,106,53,7) + L(106,53,170,54,6) + L(170,54,172,42,5) + L(46,57,100,58,3.5) + H(28,50) + L(28,41,31,36,2.5);
+const PICTOS = {
+  supino: BED + SUPBODY + '<text class="ptx" x="44" y="28">cara ↑</text>',
+  dorsal: BED + L(38,53,106,53,7) + P('106,53 134,24 160,55',6) + L(160,56,172,57,5) + L(46,57,100,58,3.5) + H(28,50) + L(28,41,31,36,2.5),
+  prono: BED + L(38,53,106,53,7) + L(106,53,168,54,6) + L(168,55,180,59,5) + L(46,49,100,49,3.5) + H(28,51) + L(24,59,21,62,2.5) + '<text class="ptx" x="44" y="28">cara ↓</text>',
+  lateral: '<rect class="topbed" x="8" y="8" width="184" height="76" rx="6"/>' + L(40,48,106,48,7) + L(106,50,174,52,6) + P('106,46 138,24 164,38',6) + P('52,44 64,28 84,28',3.5) + H(30,48),
+  sims: '<rect class="topbed" x="8" y="8" width="184" height="76" rx="6"/>' + L(40,48,106,50,7) + L(106,52,172,60,6) + P('106,46 128,18 150,26',6) + P('52,44 62,24 86,22',3.5) + P('58,54 74,68 100,70',3.5,'ink soft') + H(30,48),
+  fowler: '<rect class="bed" x="80" y="62" width="110" height="7"/><line class="leg" x1="90" y1="69" x2="90" y2="84"/><line class="leg" x1="180" y1="69" x2="180" y2="84"/><line class="backrest" x1="84" y1="65" x2="38" y2="19"/>' + L(88,54,52,20,7) + P('88,54 126,46 168,55',6) + L(76,44,98,50,3.5) + H(44,12) + '<text class="ptx" x="62" y="80">45°</text>',
+  trend: '<g transform="rotate(-13 100 55)">' + BED.replace(/<line[^>]*>/g,'') + SUPBODY + '</g><text class="ptx" x="6" y="18">cabeza ↓</text>',
+  anti: '<g transform="rotate(13 100 55)">' + BED.replace(/<line[^>]*>/g,'') + SUPBODY + '</g><text class="ptx" x="6" y="12">cabeza ↑</text>',
+  roser: '<rect class="bed" x="56" y="62" width="134" height="7"/><line class="leg" x1="66" y1="69" x2="66" y2="84"/><line class="leg" x1="180" y1="69" x2="180" y2="84"/>' + L(62,53,122,53,7) + L(122,53,174,54,6) + L(174,54,176,42,5) + L(62,53,48,63,5) + H(40,70),
+  lito: '<rect class="bed" x="10" y="62" width="110" height="7"/><line class="leg" x1="20" y1="69" x2="20" y2="84"/><line class="leg" x1="112" y1="69" x2="112" y2="84"/><line class="leg" x1="160" y1="34" x2="160" y2="84"/><path class="leg" d="M150,32 Q160,40 172,32" fill="none"/>' + L(38,53,114,53,7) + P('114,53 136,22 166,28',6) + L(46,57,100,58,3.5) + H(28,50),
+  genu: BED + L(140,56,140,22,6) + L(140,57,178,57,6) + L(140,22,72,48,7) + L(44,57,88,57,3.5) + H(60,47)
+};
+const picto = (k, w) => `<svg viewBox="0 0 200 90" width="${w || 200}" role="img" aria-label="Pictograma de una posición">${PICTOS[k]}</svg>`;
+
+/* ---------- navegación ---------- */
+let cleanup = null;
+function go(view, arg) {
+  if (cleanup) { try { cleanup(); } catch (e) {} cleanup = null; }
+  window.scrollTo(0, 0);
+  const V = { home, learn, quiz: quizMod, sim, combo, quiro, cards, myths, progress };
+  (V[view] || home)(arg);
+  app.focus({ preventScroll: true });
+}
+const back = () => `<button class="back" data-go="home">← Volver al mapa</button>`;
+app.addEventListener('click', e => {
+  const b = e.target.closest('[data-go]');
+  if (b) go(b.dataset.go, b.dataset.arg);
+});
+
+function daysLeft() {
+  const d = new Date(EXAM_DATE + 'T08:00:00'); const now = new Date();
+  const t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const t1 = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  return Math.round((t1 - t0) / 86400000);
+}
+
+/* =========================================================
+   INICIO
+   ========================================================= */
+function home() {
+  const dl = daysLeft();
+  const count = dl > 1 ? `<b>${dl}</b><span>días al examen</span>` : dl === 1 ? `<b>1</b><span>día · ¡mañana!</span>` : dl === 0 ? `<b>HOY</b><span>¡a por ello!</span>` : `<b>✓</b><span>examen hecho</span>`;
+  const next = Object.keys(MODS).find(k => (S.best[k] || 0) < 80);
+  const mission = k => {
+    const m = MODS[k], best = S.best[k] || 0;
+    return `<button class="mission" data-go="learn" data-arg="${k}">
+      <span class="ic" style="background:${m.color}">${m.icon}</span>
+      <span style="flex:1;min-width:0"><span class="tt">${m.full}</span><br><span class="ds">${m.desc}</span>
+      <span class="meter" aria-hidden="true"><i style="width:${best}%;background:${m.color}"></i></span>
+      <span class="small muted">Mejor resultado: ${best}% ${best >= 80 ? '· dominado' : '· medalla al 80 %'}</span></span>
+      ${best >= 80 ? '<span class="medal" aria-label="Medalla conseguida">🏅</span>' : ''}
+    </button>`;
+  };
+  app.innerHTML = `
+    <div class="hero">
+      <div><h1>Misión Anatomía</h1>
+      <p class="muted">Planos, ejes, movimientos y posiciones · Anatomía Aplicada · 1.º Bachillerato</p></div>
+      <div class="count" aria-label="Cuenta atrás">${count}</div>
+    </div>
+    <div class="box key"><span class="lab">Lo que entra (según la profesora)</span>Planos, ejes, posiciones y movimientos. Aquí está todo eso y nada más.</div>
+    ${next ? `<div class="card" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+       <div style="flex:1;min-width:200px"><b>Tu siguiente misión</b><br><span class="muted small">${MODS[next].full}. Lee, juega con el esquema y supera el reto con un 80 %.</span></div>
+       <button class="btn" data-go="learn" data-arg="${next}">Empezar ▸</button></div>`
+     : `<div class="card"><b>🏆 ¡Las cuatro misiones dominadas!</b><br><span class="muted small">Ahora haz el simulacro de examen y los retos para no perder ritmo.</span></div>`}
+    <h2>Mapa de misiones</h2>
+    <div class="grid2">${Object.keys(MODS).map(mission).join('')}</div>
+    <h2>Zona de juego</h2>
+    <div class="tools">
+      <button class="tool" data-go="combo"><span class="e">🎯</span><b>Plano + eje</b><span>Descompón gestos deportivos</span></button>
+      <button class="tool" data-go="quiro"><span class="e">🏥</span><b>Quirófano</b><span>Elige la posición para cada técnica</span></button>
+      <button class="tool" data-go="cards"><span class="e">🃏</span><b>Tarjetas</b><span>Memoria con repetición espaciada</span></button>
+      <button class="tool" data-go="myths"><span class="e">⚠️</span><b>Trampas</b><span>Los errores que restan puntos</span></button>
+      <button class="tool" data-go="sim"><span class="e">📝</span><b>Simulacro</b><span>20 preguntas mezcladas</span></button>
+      <button class="tool" data-go="progress"><span class="e">📈</span><b>Mi progreso</b><span>Nivel, medallas y reinicio</span></button>
+    </div>
+    <div class="footer">Contenido basado en el material de clase. Lo que no viene de clase va marcado como <span class="tag amp">Ampliación</span>.<br>El progreso se guarda solo en este navegador.</div>`;
+}
+
+/* =========================================================
+   APRENDER
+   ========================================================= */
+function learn(k) {
+  const m = MODS[k];
+  const body = { ori: learnOri, pla: learnPla, eje: learnEje, pos: learnPos }[k]();
+  app.innerHTML = `${back()}
+    <div class="row" style="gap:12px;margin-top:4px"><span class="mission" style="all:unset"><span class="ic" style="display:grid;place-items:center;width:46px;height:46px;border-radius:13px;font-size:24px;color:#fff;background:${m.color}">${m.icon}</span></span>
+    <div><div class="tag" style="background:${m.color};color:#fff">Misión</div><h1 style="margin:4px 0 0">${m.full}</h1></div></div>
+    ${body.html}
+    <div class="card center">
+      <p><b>¿Lista para el reto?</b><br><span class="muted small">10 preguntas con explicación. Con un 80 % ganas la medalla.</span></p>
+      <button class="btn wide" data-go="quiz" data-arg="${k}">Hacer el reto de ${m.name} ▸</button>
+    </div>`;
+  if (body.init) cleanup = body.init() || null;
+}
+
+/* ---- ORIENTACIÓN ---- */
+function learnOri() {
+  const html = `
+  <p class="muted">Todo en anatomía se describe como si la persona estuviera en <b>posición anatómica</b>, aunque esté tumbada. Es el «punto cero».</p>
+  <div class="box key"><span class="lab">Posición anatómica</span>De pie y de frente · mirada al frente · pies apoyados · brazos a los lados · <b>palmas hacia delante</b> (pulgares hacia fuera).</div>
+  <div class="box warn"><span class="lab">Trampa</span>No es lo mismo que el <b>decúbito supino</b>: en posición anatómica se está de pie; en supino, tumbado boca arriba.</div>
+  <h2>Explora los términos</h2>
+  <p class="small muted">Elige una pareja y mira el dibujo.</p>
+  <div class="tabs" role="group" aria-label="Términos de orientación" id="oriTabs">
+    <button data-t="sup" aria-pressed="true">Superior / inferior</button>
+    <button data-t="med" aria-pressed="false">Medial / lateral</button>
+    <button data-t="prox" aria-pressed="false">Proximal / distal</button>
+    <button data-t="ant" aria-pressed="false">Anterior / posterior</button>
+    <button data-t="sf" aria-pressed="false">Superficial / profundo</button>
+  </div>
+  <div class="fig" style="margin-top:8px"><div id="oriFig"></div><p id="oriTxt" style="margin:8px 4px 2px"></p></div>
+  <h2>Tabla para repasar</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Término</th><th>Significa</th><th>Ejemplo</th></tr>
+    <tr><td><b>Superior · craneal</b></td><td>Hacia la cabeza</td><td>La cabeza es superior al tórax</td></tr>
+    <tr><td><b>Inferior · caudal</b></td><td>Lejos de la cabeza</td><td>El ombligo es inferior al esternón</td></tr>
+    <tr><td><b>Anterior · ventral</b></td><td>Hacia delante</td><td>El esternón es anterior al corazón</td></tr>
+    <tr><td><b>Posterior · dorsal</b></td><td>Hacia atrás</td><td>La columna es posterior al estómago</td></tr>
+    <tr><td><b>Medial</b></td><td>Cerca de la línea media</td><td>La nariz es medial a los ojos</td></tr>
+    <tr><td><b>Lateral</b></td><td>Lejos de la línea media</td><td>Las orejas son laterales a la nariz</td></tr>
+    <tr><td><b>Proximal</b></td><td>Cerca del tronco (extremidades)</td><td>El codo es proximal a la muñeca</td></tr>
+    <tr><td><b>Distal</b></td><td>Lejos del tronco (extremidades)</td><td>Los dedos son distales al codo</td></tr>
+    <tr><td><b>Superficial</b></td><td>Cerca de la superficie</td><td>La piel es superficial a los músculos</td></tr>
+    <tr><td><b>Profundo</b></td><td>Lejos de la superficie</td><td>El hueso es profundo respecto a la piel</td></tr>
+  </table></div>
+  <div class="box amp"><span class="lab">Ampliación · En animales</span>En un cuadrúpedo, <b>dorsal</b> es el lomo (arriba) y <b>ventral</b> la panza (abajo); <b>craneal</b> hacia la cabeza y <b>caudal</b> hacia la cola. En el ser humano de pie, ventral = anterior y dorsal = posterior. El Genially lo practica con una hormiga y un oso polar.</div>`;
+  const figs = {
+    sup: { svg: `<svg viewBox="0 0 300 360" role="img" aria-label="Superior e inferior"><use href="#body" x="50" y="10" width="200" height="340"/>
+        <line x1="270" y1="150" x2="270" y2="20" stroke="var(--ori)" stroke-width="4" marker-end="url(#ar)"/><text class="txt" x="212" y="16">SUPERIOR</text><text class="txts" x="222" y="30">(craneal)</text>
+        <line x1="270" y1="210" x2="270" y2="345" stroke="var(--ori)" stroke-width="4" marker-end="url(#ar)"/><text class="txt" x="214" y="352">INFERIOR</text><text class="txts" x="220" y="338">(caudal)</text></svg>`,
+      t: '<b>Superior (craneal)</b>: hacia la cabeza. <b>Inferior (caudal)</b>: alejado de la cabeza. Ejemplo: el ombligo es inferior al esternón.' },
+    med: { svg: `<svg viewBox="0 0 300 360" role="img" aria-label="Medial y lateral"><use href="#body" x="50" y="10" width="200" height="340"/>
+        <line x1="150" y1="2" x2="150" y2="356" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="6 4"/><text class="txts" x="156" y="356">línea media</text>
+        <line x1="118" y1="140" x2="146" y2="140" stroke="var(--ori)" stroke-width="4" marker-end="url(#ar)"/><text class="txt" x="108" y="160">medial</text>
+        <line x1="106" y1="170" x2="28" y2="170" stroke="var(--ori)" stroke-width="4" marker-end="url(#ar)"/><text class="txt" x="22" y="160">lateral</text></svg>`,
+      t: '<b>Medial</b>: cerca de la línea media. <b>Lateral</b>: lejos de ella. La nariz es medial a los ojos; las orejas, laterales a la nariz.' },
+    prox: { svg: `<svg viewBox="0 0 300 360" role="img" aria-label="Proximal y distal"><use href="#body" x="50" y="10" width="200" height="340"/>
+        <circle cx="190" cy="138" r="7" fill="var(--ori)"/><circle cx="194" cy="204" r="7" fill="none" stroke="var(--ori)" stroke-width="3"/>
+        <line x1="200" y1="138" x2="232" y2="120" stroke="var(--ink)"/><text class="txt" x="234" y="118">codo:</text><text class="txts" x="234" y="132">proximal</text>
+        <line x1="204" y1="206" x2="232" y2="226" stroke="var(--ink)"/><text class="txt" x="234" y="232">mano:</text><text class="txts" x="234" y="246">distal</text>
+        <path d="M188,84 Q222,150 200,200" fill="none" stroke="var(--ori)" stroke-width="2.5" stroke-dasharray="5 4" marker-end="url(#ar)"/></svg>`,
+      t: 'En las <b>extremidades</b>: <b>proximal</b> = más cerca del tronco; <b>distal</b> = más lejos. El codo es proximal a la muñeca; los dedos, distales al codo.' },
+    ant: { svg: `<svg viewBox="0 0 300 360" role="img" aria-label="Anterior y posterior, vista lateral"><use href="#side" x="90" y="10" width="120" height="340"/>
+        <line x1="190" y1="150" x2="285" y2="150" stroke="var(--ori)" stroke-width="4" marker-end="url(#ar)"/><text class="txt" x="214" y="140">ANTERIOR</text><text class="txts" x="222" y="168">(ventral)</text>
+        <line x1="120" y1="150" x2="20" y2="150" stroke="var(--ori)" stroke-width="4" marker-end="url(#ar)"/><text class="txt" x="14" y="140">POSTERIOR</text><text class="txts" x="24" y="168">(dorsal)</text>
+        <text class="txts" x="104" y="356">vista de perfil</text></svg>`,
+      t: '<b>Anterior (ventral)</b>: hacia delante. <b>Posterior (dorsal)</b>: hacia atrás. El esternón es anterior al corazón; la columna, posterior al estómago.' },
+    sf: { svg: `<svg viewBox="0 0 300 260" role="img" aria-label="Superficial y profundo"><circle cx="130" cy="130" r="110" fill="var(--bodyfill)" stroke="var(--bodystroke)" stroke-width="3"/>
+        <circle cx="130" cy="130" r="92" fill="none" stroke="var(--ori)" stroke-width="2" stroke-dasharray="4 4"/>
+        <circle cx="130" cy="130" r="34" fill="var(--card)" stroke="var(--bodystroke)" stroke-width="3"/>
+        <text class="txt" x="244" y="40">piel</text><line x1="240" y1="44" x2="212" y2="70" stroke="var(--ink)"/>
+        <text class="txt" x="186" y="112">músculo</text><text class="txt" x="114" y="135">hueso</text>
+        <text class="txts" x="6" y="250">corte de un brazo (esquema)</text></svg>`,
+      t: '<b>Superficial</b>: cerca de la superficie (la piel). <b>Profundo</b>: lejos de ella (el hueso). En el Genially: la piel del cítrico cortado es superficial y el centro, profundo.' }
+  };
+  return { html, init() {
+    const set = t => {
+      $('#oriFig').innerHTML = figs[t].svg; $('#oriTxt').innerHTML = figs[t].t;
+      document.querySelectorAll('#oriTabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.t === t));
+    };
+    $('#oriTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) set(b.dataset.t); });
+    set('sup');
+  } };
+}
+
+/* ---- PLANOS ---- */
+function learnPla() {
+  const html = `
+  <p class="muted">Un <b>plano</b> es una superficie imaginaria que divide el cuerpo o un órgano. Lo que queda a la vista al cortar es la <b>sección</b>. Los tres planos principales son perpendiculares entre sí.</p>
+  <h2>Laboratorio de cortes</h2>
+  <p class="small muted">Elige un plano y mueve el deslizador. A la izquierda, de frente; a la derecha, de perfil (mira hacia la derecha).</p>
+  <div class="tabs" role="group" aria-label="Elegir plano" id="plTabs">
+    <button data-p="sag" aria-pressed="true">Sagital</button>
+    <button data-p="fro" aria-pressed="false">Frontal (coronal)</button>
+    <button data-p="tra" aria-pressed="false">Transversal</button>
+  </div>
+  <div class="fig" style="margin-top:8px">
+    <svg viewBox="0 0 380 360" id="plSvg" role="img" aria-label="Cuerpo con un plano de corte">
+      <use href="#body" x="10" y="10" width="200" height="340"/>
+      <use href="#side" x="250" y="10" width="120" height="340"/>
+      <g id="plLayer"></g>
+    </svg>
+    <input type="range" id="plRange" aria-label="Mover el plano">
+    <div class="readout" id="plRead"></div>
+    <p class="small muted" id="plSub"></p>
+  </div>
+  <div class="tablewrap"><table>
+    <tr><th>Plano</th><th>Divide en</th><th>Cómo reconocerlo</th></tr>
+    <tr><td><b>Sagital</b></td><td>Derecha e izquierda</td><td>Vertical, de delante atrás. Si pasa justo por la línea media es el <b>sagital medio</b> (mediano): <b>dos mitades iguales</b>. Si no, partes desiguales (parasagital).</td></tr>
+    <tr><td><b>Frontal o coronal</b></td><td>Anterior (ventral) y posterior (dorsal)</td><td>Vertical, de lado a lado, paralelo a la frente. Sigue la sutura coronal del cráneo.</td></tr>
+    <tr><td><b>Transversal u horizontal</b></td><td>Superior (craneal) e inferior (caudal)</td><td>Paralelo al suelo. En radiología se llama <b>axial</b> (el corte del TAC).</td></tr>
+    <tr><td><b>Oblicuo</b></td><td>—</td><td>Corte inclinado que combina dos planos.</td></tr>
+  </table></div>
+  <div class="box key"><span class="lab">El truco del pan (del Genially)</span>Abrir un bollo en tapa y base: <b>transversal</b>. Partirlo a lo largo en dos mitades iguales: <b>sagital medio</b>. Separar la cara de delante de la de detrás: <b>frontal</b>.</div>
+  <div class="box warn"><span class="lab">Trampa</span>Se corta por un <b>plano</b> (una superficie), no por un eje. Si una pregunta dice «¿por qué eje hemos cortado?», responde con el plano.</div>`;
+  return { html, init() {
+    let mode = 'sag';
+    const r = $('#plRange'), layer = $('#plLayer');
+    const cfg = {
+      sag: { min: -45, max: 45, val: 18 },
+      fro: { min: -26, max: 26, val: 0 },
+      tra: { min: 40, max: 320, val: 150 }
+    };
+    function draw() {
+      const v = +r.value;
+      let g = '', read = '', sub = '';
+      if (mode === 'sag') {
+        const x = 110 + v;
+        g = `<polygon points="${x - 9},6 ${x + 9},-4 ${x + 9},344 ${x - 9},354" fill="url(#hatch)" opacity=".85" stroke="var(--pla)" stroke-width="2"/>
+             <rect x="250" y="8" width="120" height="344" rx="10" fill="var(--plane)" stroke="var(--pla)" stroke-width="2"/>
+             <text class="txts" x="254" y="24">aquí el plano</text><text class="txts" x="254" y="37">es la pantalla</text>`;
+        const medio = Math.abs(v) <= 3;
+        read = medio ? '✔ Plano sagital MEDIO: dos mitades iguales' : 'Plano sagital (parasagital): mitades desiguales';
+        sub = medio ? 'Separa la mitad derecha de la izquierda, y ambas miden lo mismo. Prueba a moverlo.' : 'Sigue separando derecha de izquierda, pero no por la línea media. Lleva el deslizador al centro.';
+      } else if (mode === 'fro') {
+        const x = 308 + v;
+        g = `<rect x="10" y="8" width="200" height="344" rx="10" fill="var(--plane)" stroke="var(--pla)" stroke-width="2"/>
+             <polygon points="${x - 8},4 ${x + 8},-6 ${x + 8},344 ${x - 8},354" fill="url(#hatch)" opacity=".85" stroke="var(--pla)" stroke-width="2"/>
+             <text class="txt" x="${x + 12}" y="180">delante</text><text class="txt" x="${x - 66}" y="180">detrás</text>`;
+        read = 'Plano frontal (coronal): anterior | posterior';
+        sub = 'De frente lo ves como la propia pantalla; de perfil, como una línea vertical. Separa la parte anterior (ventral) de la posterior (dorsal).';
+      } else {
+        const y = v;
+        g = `<polygon points="0,${y + 10} 210,${y - 8} 230,${y + 8} 20,${y + 26}" fill="url(#hatch)" opacity=".85" stroke="var(--pla)" stroke-width="2"/>
+             <polygon points="240,${y + 6} 375,${y - 4} 380,${y + 6} 245,${y + 16}" fill="url(#hatch)" opacity=".85" stroke="var(--pla)" stroke-width="2"/>`;
+        const zona = y < 60 ? 'la cabeza' : y < 110 ? 'el cuello y los hombros' : y < 190 ? 'el tronco' : 'las piernas';
+        read = 'Plano transversal (horizontal): superior | inferior';
+        sub = `Ahora corta por ${zona}. Separa la parte superior (craneal) de la inferior (caudal). En radiología: corte axial.`;
+      }
+      layer.innerHTML = g; $('#plRead').textContent = read; $('#plSub').textContent = sub;
+    }
+    function setMode(m) {
+      mode = m; const c = cfg[m]; r.min = c.min; r.max = c.max; r.value = c.val; draw();
+      document.querySelectorAll('#plTabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.p === m));
+    }
+    r.addEventListener('input', draw);
+    $('#plTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setMode(b.dataset.p); });
+    setMode('sag');
+  } };
+}
+
+/* ---- EJES Y MOVIMIENTOS ---- */
+function learnEje() {
+  const html = `
+  <p class="muted">El <b>plano</b> es la superficie donde ocurre el movimiento; el <b>eje</b> es la línea alrededor de la cual gira. Cada plano tiene su eje, que lo atraviesa en perpendicular. Describe siempre un movimiento con <b>dos palabras: plano y eje</b>.</p>
+  <h2>Simulador de movimientos</h2>
+  <div class="tabs" role="group" aria-label="Elegir plano" id="ejTabs">
+    <button data-p="sag" aria-pressed="true">Plano sagital</button>
+    <button data-p="fro" aria-pressed="false">Plano frontal</button>
+    <button data-p="tra" aria-pressed="false">Plano transversal</button>
+  </div>
+  <div class="grid2" style="margin-top:8px">
+    <div class="fig"><b class="small">Dónde está el eje</b><div id="ejAxis"></div></div>
+    <div class="fig"><b class="small">Míralo moverse</b><div id="ejAnim"></div></div>
+  </div>
+  <div class="card" id="ejInfo"></div>
+  <h2>La tabla clave</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Plano</th><th>Eje</th><th>Movimiento</th><th>Ejemplos de clase</th></tr>
+    <tr><td><b>Sagital</b></td><td>Transversal (de lado a lado)</td><td>Flexión y extensión</td><td>Flexión de cadera al correr, voltereta, curl de bíceps</td></tr>
+    <tr><td><b>Frontal</b></td><td>Sagital o anteroposterior</td><td>Abducción y aducción</td><td>Salto de estrella, rueda lateral, elevación lateral</td></tr>
+    <tr><td><b>Transversal</b></td><td>Longitudinal (de arriba abajo)</td><td>Rotación y torsión</td><td>Lanzamiento de disco, giro de patinaje, swing de golf</td></tr>
+  </table></div>
+  <div class="box key"><span class="lab">Para memorizar</span><b>S</b>agital → eje <b>T</b>ransversal → flexión · <b>F</b>rontal → eje <b>S</b>agital → abducción · <b>T</b>ransversal → eje <b>L</b>ongitudinal → rotación.</div>
+  <div class="box warn"><span class="lab">Nombres cruzados</span>«Sagital» aparece dos veces en filas distintas: el plano sagital va con el eje <b>transversal</b>, y el eje sagital va con el plano <b>frontal</b>.</div>
+  <h3>Los movimientos básicos</h3>
+  <div class="tablewrap"><table>
+    <tr><td><b>Flexión</b></td><td>Doblar: se cierra el ángulo de la articulación.</td></tr>
+    <tr><td><b>Extensión</b></td><td>Estirar: se abre el ángulo y se vuelve a la posición anatómica.</td></tr>
+    <tr><td><b>Abducción</b></td><td>Alejar un segmento de la línea media (ab- = separar).</td></tr>
+    <tr><td><b>Aducción</b></td><td>Acercarlo a la línea media (ad- = hacia).</td></tr>
+    <tr><td><b>Rotación</b></td><td>Girar un segmento sobre su eje longitudinal.</td></tr>
+  </table></div>
+  <div class="box warn"><span class="lab">Errores que avisa la profesora</span>Nombrar solo el plano o solo el eje · creer que todo gesto ocurre en un solo plano · olvidar que abducción y aducción son del plano frontal.</div>
+  <div class="box amp"><span class="lab">Ampliación · otros movimientos</span><b>Circunducción</b>: dibujar un cono con el brazo (combina los anteriores). <b>Pronación / supinación</b>: girar el antebrazo; en posición anatómica la palma mira adelante (supinación) y al pronar mira atrás. <b>Flexión dorsal / plantar</b>: subir la punta del pie / ponerse de puntillas.</div>`;
+  const AX = {
+    sag: { axis: `<svg viewBox="0 0 240 360" role="img" aria-label="Eje transversal"><use href="#body" x="20" y="10" width="200" height="340"/>
+           <line x1="2" y1="160" x2="238" y2="160" stroke="var(--eje)" stroke-width="5"/><circle cx="4" cy="160" r="5" fill="var(--eje)"/><circle cx="236" cy="160" r="5" fill="var(--eje)"/>
+           <text class="txt" x="6" y="150">eje transversal</text></svg>`,
+      anim: `<svg viewBox="0 0 220 240" role="img" aria-label="Flexión del codo vista de perfil">
+           <line class="ink" x1="110" y1="20" x2="110" y2="110" stroke-width="16"/>
+           <g><line x1="110" y1="110" x2="110" y2="196" stroke="var(--eje)" stroke-width="14" stroke-linecap="round"/>
+             <circle cx="110" cy="204" r="11" fill="var(--eje)"/>
+             <animateTransform attributeName="transform" type="rotate" values="0 110 110;-135 110 110;-135 110 110;0 110 110;0 110 110" keyTimes="0;.4;.5;.9;1" dur="3.2s" repeatCount="indefinite"/></g>
+           <circle cx="110" cy="110" r="10" fill="var(--card)" stroke="var(--ink)" stroke-width="3"/><circle cx="110" cy="110" r="3.5" class="inkf"/>
+           <text class="txts" x="122" y="128">eje (sale hacia ti) ⊙</text>
+           <text class="txt" x="10" y="232">Flexión del codo · vista de perfil</text></svg>`,
+      info: '<b>Plano sagital · eje transversal → flexión y extensión.</b><br>El eje atraviesa el cuerpo de lado a lado, «como una barra que atraviesa la cintura». El movimiento va hacia delante y hacia atrás. Ejemplos: flexión de cadera al correr, voltereta adelante, curl de bíceps.' },
+    fro: { axis: `<svg viewBox="0 0 240 360" role="img" aria-label="Eje sagital"><use href="#body" x="20" y="10" width="200" height="340"/>
+           <circle cx="120" cy="150" r="14" fill="var(--card)" stroke="var(--eje)" stroke-width="4"/><circle cx="120" cy="150" r="5" fill="var(--eje)"/>
+           <text class="txt" x="140" y="135">eje sagital</text><text class="txts" x="140" y="149">(anteroposterior:</text><text class="txts" x="140" y="161">atraviesa de delante</text><text class="txts" x="140" y="173">atrás, hacia ti)</text></svg>`,
+      anim: `<svg viewBox="0 0 220 240" role="img" aria-label="Abducción del hombro vista de frente">
+           <circle class="head" cx="70" cy="34" r="20"/>
+           <line class="ink" x1="70" y1="56" x2="70" y2="150" stroke-width="18"/>
+           <line class="ink" x1="70" y1="150" x2="56" y2="225" stroke-width="12"/><line class="ink" x1="70" y1="150" x2="84" y2="225" stroke-width="12"/>
+           <line class="ink" x1="70" y1="70" x2="54" y2="150" stroke-width="10"/>
+           <g><line x1="84" y1="70" x2="96" y2="160" stroke="var(--eje)" stroke-width="12" stroke-linecap="round"/>
+             <animateTransform attributeName="transform" type="rotate" values="0 84 70;-88 84 70;-88 84 70;0 84 70;0 84 70" keyTimes="0;.4;.5;.9;1" dur="3.2s" repeatCount="indefinite"/></g>
+           <circle cx="84" cy="70" r="8" fill="var(--card)" stroke="var(--ink)" stroke-width="3"/><circle cx="84" cy="70" r="3" class="inkf"/>
+           <text class="txt" x="10" y="236">Abducción del hombro · de frente</text></svg>`,
+      info: '<b>Plano frontal · eje sagital (anteroposterior) → abducción y aducción.</b><br>El eje atraviesa el cuerpo de delante hacia atrás. El movimiento va hacia los lados. Ejemplos: salto de estrella, rueda lateral, elevación lateral de brazos.' },
+    tra: { axis: `<svg viewBox="0 0 240 360" role="img" aria-label="Eje longitudinal"><use href="#body" x="20" y="14" width="200" height="340"/>
+           <line x1="120" y1="2" x2="120" y2="356" stroke="var(--eje)" stroke-width="5"/><circle cx="120" cy="4" r="5" fill="var(--eje)"/><circle cx="120" cy="354" r="5" fill="var(--eje)"/>
+           <text class="txt" x="128" y="20">eje longitudinal</text></svg>`,
+      anim: `<svg viewBox="0 0 220 240" role="img" aria-label="Rotación de la cabeza vista desde arriba">
+           <g><ellipse cx="110" cy="118" rx="88" ry="26" fill="var(--bodyfill)" stroke="var(--bodystroke)" stroke-width="3"/>
+             <circle cx="110" cy="112" r="34" fill="var(--bodyfill)" stroke="var(--bodystroke)" stroke-width="3"/>
+             <polygon points="110,70 100,82 120,82" fill="var(--eje)"/>
+             <animateTransform attributeName="transform" type="rotate" values="0 110 112;-55 110 112;-55 110 112;55 110 112;55 110 112;0 110 112" keyTimes="0;.2;.35;.65;.8;1" dur="4s" repeatCount="indefinite"/></g>
+           <circle cx="110" cy="112" r="6" fill="var(--card)" stroke="var(--ink)" stroke-width="2.5"/><circle cx="110" cy="112" r="2.4" class="inkf"/>
+           <text class="txts" x="10" y="200">el eje sale hacia ti ⊙</text>
+           <text class="txt" x="10" y="232">Rotación: cabeza vista desde arriba</text></svg>`,
+      info: '<b>Plano transversal · eje longitudinal → rotación.</b><br>El eje recorre el cuerpo de arriba abajo. El movimiento es un giro o una torsión. Ejemplos: lanzamiento de disco, giro de patinaje, swing de golf.' }
+  };
+  return { html, init() {
+    const set = p => {
+      $('#ejAxis').innerHTML = AX[p].axis; $('#ejAnim').innerHTML = AX[p].anim; $('#ejInfo').innerHTML = AX[p].info;
+      document.querySelectorAll('#ejTabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.p === p));
+    };
+    $('#ejTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) set(b.dataset.p); });
+    set('sag');
+  } };
+}
+
+/* ---- POSICIONES ---- */
+function learnPos() {
+  const card = k => `<div class="card" style="margin:0"><div class="fig" style="padding:4px">${picto(k)}</div>
+     <h3 style="margin:8px 0 2px">${POSITIONS[k].name} <span class="tag">${POSITIONS[k].group}</span></h3>
+     <p class="small" style="margin:0 0 4px">${POSITIONS[k].look}</p><p class="small muted" style="margin:0"><b>Para qué:</b> ${POSITIONS[k].use}</p></div>`;
+  const keys = Object.keys(POSITIONS);
+  const html = `
+  <p class="muted">Son las posturas en que se coloca a una persona en la cama o la camilla. Las <b>básicas</b> son para pacientes encamados con poca movilidad: cambiar de posición evita las <b>úlceras por presión (UPP)</b>. Las <b>quirúrgicas</b>, para operaciones y exploraciones.</p>
+  <div class="box key"><span class="lab">Cómo reconocerlas</span>1) ¿Boca arriba, boca abajo o de lado? · 2) ¿La cama está plana, con el respaldo levantado o inclinada entera? · 3) ¿Qué hacen las piernas y la cabeza?</div>
+  <div class="tabs" role="group" aria-label="Filtrar posiciones" id="psTabs">
+    <button data-f="all" aria-pressed="true">Todas</button><button data-f="básica" aria-pressed="false">Básicas</button><button data-f="quirúrgica" aria-pressed="false">Quirúrgicas</button>
+  </div>
+  <div class="grid2" id="psGrid" style="margin-top:10px"></div>
+  <div class="box warn"><span class="lab">Trampas</span><b>Supino</b> y <b>dorsal</b> son boca arriba; el dorsal lleva las rodillas flexionadas. <b>Trendelenburg</b>: cabeza abajo; <b>Anti</b>: cabeza arriba. En <b>Fowler</b> solo se levanta el respaldo; en Antitrendelenburg se inclina toda la camilla.</div>
+  <div class="box clin"><span class="lab">En la práctica clínica</span>Al paciente inconsciente se le pone en posición de seguridad para que, si vomita, el contenido salga por la boca y no pase a la vía respiratoria. El Fowler facilita respirar porque las vísceras bajan y el diafragma se mueve mejor.</div>
+  <div class="box amp"><span class="lab">Ampliación</span>La ficha da 45° para Trendelenburg; en el hospital suelen usarse inclinaciones menores (15–30°). Para el examen, usa el dato de clase. <b>Genu</b> = rodilla y <b>pectoral</b> = pecho; <b>litotomía</b> viene de la antigua operación para sacar «piedras» (<i>lithos</i>) de la vejiga.</div>`;
+  return { html, init() {
+    const set = f => {
+      $('#psGrid').innerHTML = keys.filter(k => f === 'all' || POSITIONS[k].group === f).map(card).join('');
+      document.querySelectorAll('#psTabs button').forEach(b => b.setAttribute('aria-pressed', b.dataset.f === f));
+    };
+    $('#psTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) set(b.dataset.f); });
+    set('all');
+  } };
+}
+
+/* =========================================================
+   MOTOR DE PREGUNTAS
+   ========================================================= */
+function runQuiz(list, opts) {
+  // opts: {title, mod, exam:boolean}
+  let i = 0, score = 0, streak = 0, answers = [];
+  const items = list.map(q => { const order = shuffle(q.o.map((t, idx) => idx)); return Object.assign({}, q, { order }); });
+  function render() {
+    const q = items[i];
+    const letters = 'ABCD';
+    app.innerHTML = `${back()}
+      <div class="qhead"><span>${opts.title}</span><span>${i + 1} / ${items.length}${!opts.exam && streak >= 2 ? ` · <span class="combo">🔥 racha ${streak}</span>` : ''}</span></div>
+      <div class="progress"><i style="width:${i / items.length * 100}%"></i></div>
+      <div class="card">
+        ${q.fig ? `<div class="fig" style="max-width:360px;margin:0 auto 8px">${picto(q.fig)}</div>` : ''}
+        <div class="qtext">${q.q}</div>
+        <div class="opts" role="group" aria-label="Opciones">${q.order.map((oi, n) => `<button class="opt" data-oi="${oi}"><span class="k">${letters[n]}</span><span>${esc(q.o[oi])}</span></button>`).join('')}</div>
+        <div id="fbx" aria-live="polite"></div>
+      </div>`;
+    app.querySelector('.opts').addEventListener('click', e => {
+      const b = e.target.closest('.opt'); if (!b || b.disabled) return;
+      const oi = +b.dataset.oi, ok = oi === q.a;
+      answers.push({ q, oi, ok });
+      app.querySelectorAll('.opt').forEach(x => x.disabled = true);
+      if (ok) score++;
+      if (opts.exam) { b.style.borderColor = 'var(--ink)'; setTimeout(next, 250); return; }
+      b.classList.add(ok ? 'ok' : 'bad');
+      if (!ok) app.querySelector(`.opt[data-oi="${q.a}"]`).classList.add('ok');
+      if (ok) { streak++; addXP(streak >= 3 ? 15 : 10, streak >= 3 ? 'racha' : ''); } else streak = 0;
+      if (streak > (S.streakBest || 0)) { S.streakBest = streak; save(); }
+      $('#fbx').innerHTML = `<div class="fb ${ok ? 'ok' : 'bad'}"><b>${ok ? '✔ ¡Correcto!' : '✘ No es esa'}</b>${q.e}</div>
+        <button class="btn wide" id="nx">${i + 1 < items.length ? 'Siguiente ▸' : 'Ver resultado ▸'}</button>`;
+      $('#nx').focus();
+      $('#nx').addEventListener('click', next);
+    });
+  }
+  function next() { i++; if (i < items.length) render(); else finish(); }
+  function finish() {
+    const pct = Math.round(score / items.length * 100);
+    let medalMsg = '';
+    if (opts.mod) {
+      const prev = S.best[opts.mod] || 0;
+      if (pct > prev) S.best[opts.mod] = pct;
+      if (pct >= 80 && prev < 80) { medalMsg = `<p class="big">🏅</p><p><b>¡Medalla de ${MODS[opts.mod].name}!</b></p>`; addXP(50, 'medalla'); }
+      save();
+    }
+    if (opts.exam) { const k = 'sim'; if (pct > (S.best[k] || 0)) { S.best[k] = pct; } save(); addXP(score * 5, 'simulacro'); }
+    const nota = (score / items.length * 10).toFixed(1).replace('.', ',');
+    const fails = answers.filter(a => !a.ok);
+    app.innerHTML = `${back()}
+      <div class="card center">
+        <p class="muted small">${opts.title}</p>
+        <p class="big">${score} / ${items.length}</p>
+        <p>${opts.exam ? `Nota estimada: <b>${nota}</b>` : `${pct}% de aciertos`}</p>
+        ${medalMsg}
+        <p class="muted small">${pct >= 90 ? 'Dominio total. ¡Así se hace!' : pct >= 80 ? 'Muy bien: lo tienes.' : pct >= 60 ? 'Vas bien. Repasa los fallos y repite.' : 'Toca repasar la teoría de esta misión y volver a intentarlo.'}</p>
+        <div class="row" style="justify-content:center">
+          <button class="btn" id="again">Repetir</button>
+          ${opts.mod ? `<button class="btn ghost" data-go="learn" data-arg="${opts.mod}">Repasar teoría</button>` : ''}
+          <button class="btn ghost" data-go="home">Mapa</button>
+        </div>
+      </div>
+      ${fails.length ? `<h2>Repasa tus fallos</h2>${fails.map(a => `<div class="card"><b>${a.q.q}</b>${a.q.fig ? `<div style="max-width:260px">${picto(a.q.fig)}</div>` : ''}
+        <p class="small" style="margin:6px 0 2px">Tu respuesta: <span style="color:var(--bad)">✘ ${esc(a.q.o[a.oi])}</span></p>
+        <p class="small" style="margin:0 0 4px">Correcta: <span style="color:var(--ok)">✔ ${esc(a.q.o[a.q.a])}</span></p>
+        <p class="small muted" style="margin:0">${a.q.e}</p></div>`).join('')}` : ''}`;
+    $('#again').addEventListener('click', () => opts.again());
+  }
+  render();
+}
+
+function quizMod(k) {
+  const pool = QUESTIONS.filter(q => q.m === k);
+  const start = () => runQuiz(shuffle(pool).slice(0, 10), { title: 'Reto · ' + MODS[k].name, mod: k, again: start });
+  start();
+}
+function sim() {
+  const start = () => {
+    // 5 por bloque, mezcladas
+    const pick = Object.keys(MODS).flatMap(k => shuffle(QUESTIONS.filter(q => q.m === k)).slice(0, 5));
+    app.innerHTML = `${back()}<h1>Simulacro de examen</h1>
+      <div class="card"><p>20 preguntas mezcladas de los cuatro bloques. <b>No verás si aciertas hasta el final</b>, como en un examen real.</p>
+      <p class="muted small">Tómatelo en serio: sin apuntes y sin prisa (unos 15 minutos).</p>
+      <button class="btn wide" id="go">Empezar el simulacro ▸</button></div>`;
+    $('#go').addEventListener('click', () => runQuiz(shuffle(pick), { title: 'Simulacro', exam: true, again: start }));
+  };
+  start();
+}
+
+/* =========================================================
+   RETO PLANO + EJE
+   ========================================================= */
+function combo() {
+  const round = shuffle(GESTURES).slice(0, 8);
+  let i = 0, pts = 0;
+  const PL = ['Sagital', 'Frontal', 'Transversal'], EJ = ['Transversal', 'Sagital', 'Longitudinal'], MV = ['Flexión / extensión', 'Abducción / aducción', 'Rotación'];
+  function render() {
+    const g = round[i]; const pick = { p: null, e: null, m: null };
+    const chips = (key, arr, lbl) => `<div class="sel"><span class="lbl">${lbl}</span><div class="chips" data-k="${key}">${arr.map(v => `<button class="chip" aria-pressed="false" data-v="${v}">${v}</button>`).join('')}</div></div>`;
+    app.innerHTML = `${back()}
+      <div class="qhead"><span>🎯 Reto Plano + eje</span><span>${i + 1} / ${round.length} · ${pts} aciertos</span></div>
+      <div class="progress"><i style="width:${i / round.length * 100}%"></i></div>
+      <div class="card"><p class="muted small" style="margin:0">Descompón el gesto:</p><div class="qtext">${g.g}</div>
+      ${chips('p', PL, 'Plano')}${chips('e', EJ, 'Eje')}${chips('m', MV, 'Movimiento')}
+      <button class="btn wide" id="chk" disabled>Comprobar</button><div id="fbx" aria-live="polite"></div></div>`;
+    app.querySelectorAll('.chips').forEach(box => box.addEventListener('click', e => {
+      const b = e.target.closest('.chip'); if (!b || box.dataset.locked) return;
+      box.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c === b));
+      pick[box.dataset.k] = b.dataset.v;
+      $('#chk').disabled = !(pick.p && pick.e && pick.m);
+    }));
+    $('#chk').addEventListener('click', () => {
+      const right = { p: g.p, e: g.e, m: g.m }; let all = true;
+      app.querySelectorAll('.chips').forEach(box => {
+        box.dataset.locked = 1; const k = box.dataset.k;
+        box.querySelectorAll('.chip').forEach(c => {
+          if (c.dataset.v === right[k]) c.classList.add('ok');
+          else if (c.getAttribute('aria-pressed') === 'true') { c.classList.add('bad'); all = false; }
+          c.setAttribute('aria-pressed', 'false');
+        });
+      });
+      if (all) { pts++; addXP(15, 'combo'); }
+      $('#chk').remove();
+      $('#fbx').innerHTML = `<div class="fb ${all ? 'ok' : 'bad'}"><b>${all ? '✔ ¡Combo perfecto!' : '✘ Revisa lo marcado en rojo'}</b>${g.why}<br><span class="small">Respuesta: plano ${g.p.toLowerCase()} · eje ${g.e.toLowerCase()} · ${g.m.toLowerCase()}.</span></div>
+        <button class="btn wide" id="nx">${i + 1 < round.length ? 'Siguiente gesto ▸' : 'Ver resultado ▸'}</button>`;
+      $('#nx').addEventListener('click', () => { i++; i < round.length ? render() : end(); });
+    });
+  }
+  function end() {
+    app.innerHTML = `${back()}<div class="card center"><p class="muted small">Reto Plano + eje</p><p class="big">${pts} / ${round.length}</p>
+      <p>${pts === round.length ? '¡Perfecto! Plano y eje dominados.' : 'Recuerda: sagital–transversal–flexión · frontal–sagital–abducción · transversal–longitudinal–rotación.'}</p>
+      <div class="row" style="justify-content:center"><button class="btn" data-go="combo">Otra ronda</button><button class="btn ghost" data-go="learn" data-arg="eje">Ver el simulador</button></div></div>`;
+  }
+  render();
+}
+
+/* =========================================================
+   RETO QUIRÓFANO
+   ========================================================= */
+function quiro() {
+  const round = shuffle(TECHS).slice(0, 10);
+  let i = 0, pts = 0;
+  const keys = Object.keys(POSITIONS);
+  function render() {
+    const t = round[i];
+    app.innerHTML = `${back()}
+      <div class="qhead"><span>🏥 Quirófano</span><span>${i + 1} / ${round.length} · ${pts} aciertos</span></div>
+      <div class="progress"><i style="width:${i / round.length * 100}%"></i></div>
+      <div class="card"><p class="muted small" style="margin:0">¿Qué posición emplearías?</p><div class="qtext">${t.t}</div>
+      <div class="pgrid">${shuffle(keys).map(k => `<button class="pcard" data-k="${k}">${picto(k, 150)}${POSITIONS[k].name}</button>`).join('')}</div>
+      <div id="fbx" aria-live="polite"></div></div>`;
+    app.querySelector('.pgrid').addEventListener('click', e => {
+      const b = e.target.closest('.pcard'); if (!b || b.disabled) return;
+      const ok = t.a.includes(b.dataset.k);
+      app.querySelectorAll('.pcard').forEach(c => { c.disabled = true; if (t.a.includes(c.dataset.k)) c.classList.add('ok'); });
+      if (!ok) b.classList.add('bad');
+      if (ok) { pts++; addXP(10); }
+      $('#fbx').innerHTML = `<div class="fb ${ok ? 'ok' : 'bad'}"><b>${ok ? '✔ ¡Bien elegido!' : '✘ No es la mejor opción'}</b>${t.why}${t.a.length > 1 ? '<br><span class="small">Aquí vale más de una respuesta si la justificas.</span>' : ''}</div>
+        <button class="btn wide" id="nx">${i + 1 < round.length ? 'Siguiente paciente ▸' : 'Ver resultado ▸'}</button>`;
+      $('#nx').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      $('#nx').addEventListener('click', () => { i++; i < round.length ? render() : end(); });
+    });
+  }
+  function end() {
+    app.innerHTML = `${back()}<div class="card center"><p class="muted small">Quirófano</p><p class="big">${pts} / ${round.length}</p>
+      <p>${pts >= 8 ? '¡Equipo médico de primera!' : 'Repasa la galería de posiciones y vuelve a intentarlo.'}</p>
+      <div class="row" style="justify-content:center"><button class="btn" data-go="quiro">Nuevos pacientes</button><button class="btn ghost" data-go="learn" data-arg="pos">Ver la galería</button></div></div>`;
+  }
+  render();
+}
+
+/* =========================================================
+   TARJETAS (Leitner, 3 cajas)
+   ========================================================= */
+function cards(filter) {
+  const f = filter || 'all';
+  const pool = CARDS.map((c, idx) => Object.assign({ id: 'c' + idx }, c)).filter(c => f === 'all' || c.m === f);
+  const box = c => S.leit[c.id] || 1;
+  function pickNext() {
+    for (const b of [1, 2, 3]) { const inBox = pool.filter(c => box(c) === b); if (inBox.length) return { c: shuffle(inBox)[0], b }; }
+    return null;
+  }
+  function render() {
+    const counts = [1, 2, 3].map(b => pool.filter(c => box(c) === b).length);
+    const nx = pickNext(); if (!nx) return;
+    const c = nx.c;
+    app.innerHTML = `${back()}<h1>🃏 Tarjetas</h1>
+      <div class="tabs" role="group" aria-label="Filtrar tarjetas" id="cfTabs">
+        <button data-f="all" aria-pressed="${f === 'all'}">Todas</button>${Object.keys(MODS).map(k => `<button data-f="${k}" aria-pressed="${f === k}">${MODS[k].name}</button>`).join('')}
+      </div>
+      <div class="boxes" aria-label="Cajas de repaso"><span>Caja 1 · ${counts[0]}</span><span>Caja 2 · ${counts[1]}</span><span>Caja 3 · ${counts[2]}</span></div>
+      <p class="small muted center">Primero salen las de la caja 1 (las que menos sabes). Piensa la respuesta antes de girar.</p>
+      <div class="flip" id="fc" tabindex="0" role="button" aria-label="Girar tarjeta"><div class="in">
+        <div class="f"><span class="tag" style="background:${MODS[c.m].color};color:#fff">${MODS[c.m].name}</span><b style="margin-top:10px">${c.f}</b><span class="small muted" style="margin-top:12px">Toca para girar</span></div>
+        <div class="b"><p style="font-size:18px">${c.b}</p></div></div></div>
+      <div class="row" style="margin-top:12px;justify-content:center" id="fcBtns" hidden>
+        <button class="btn ghost" id="no">🔁 Repasar</button><button class="btn" id="si">✔ Lo sabía</button></div>`;
+    const fc = $('#fc');
+    const flip = () => { fc.classList.toggle('on'); $('#fcBtns').hidden = false; };
+    fc.addEventListener('click', flip);
+    fc.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+    $('#si').addEventListener('click', () => { S.leit[c.id] = Math.min(3, box(c) + 1); save(); addXP(3); render(); });
+    $('#no').addEventListener('click', () => { S.leit[c.id] = 1; save(); render(); });
+    $('#cfTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) go('cards', b.dataset.f); });
+  }
+  render();
+}
+
+/* =========================================================
+   TRAMPAS
+   ========================================================= */
+function myths() {
+  app.innerHTML = `${back()}<h1>⚠️ Trampas del examen</h1>
+    <p class="muted">Cada frase es <b>falsa</b>. Antes de abrirla, intenta decir por qué. Luego compruébalo.</p>
+    ${MYTHS.map((m, i) => `<div class="myth" id="m${i}"><button aria-expanded="false" aria-controls="ma${i}"><span class="x">✘</span><span>${m.x}</span></button><div class="ans" id="ma${i}">${m.v}</div></div>`).join('')}`;
+  app.querySelectorAll('.myth button').forEach(b => b.addEventListener('click', () => {
+    const d = b.parentElement; const on = !d.classList.contains('open'); d.classList.toggle('open', on); b.setAttribute('aria-expanded', on);
+    if (on && !S.done[d.id]) { S.done[d.id] = 1; save(); addXP(2); }
+  }));
+}
+
+/* =========================================================
+   PROGRESO
+   ========================================================= */
+function progress() {
+  const { l, n } = level();
+  const known = Object.values(S.leit).filter(v => v === 3).length;
+  app.innerHTML = `${back()}<h1>📈 Mi progreso</h1>
+    <div class="card"><p class="big">${S.xp} XP</p><p>Nivel actual: <b>${l.name}</b>${n ? ` · faltan ${n.xp - S.xp} XP para <b>${n.name}</b>` : ' · ¡nivel máximo!'}</p>
+      <div class="levels">${LEVELS.map(x => `<span class="${S.xp >= x.xp ? 'on' : ''}">${x.name}</span>`).join('')}</div></div>
+    <div class="card"><h3 style="margin-top:0">Medallas</h3>
+      ${Object.keys(MODS).map(k => `<p style="margin:6px 0">${(S.best[k] || 0) >= 80 ? '🏅' : '⬜'} <b>${MODS[k].full}</b> · mejor: ${S.best[k] || 0}%</p>`).join('')}
+      <p style="margin:6px 0">📝 <b>Simulacro</b> · mejor: ${S.best.sim || 0}%</p>
+      <p style="margin:6px 0">🔥 <b>Mejor racha</b>: ${S.streakBest || 0} seguidas</p>
+      <p style="margin:6px 0">🃏 <b>Tarjetas en la caja 3</b>: ${known} de ${CARDS.length}</p></div>
+    <div class="card"><h3 style="margin-top:0">Empezar de cero</h3><p class="small muted">Borra XP, medallas y tarjetas de este navegador.</p>
+      <button class="btn ghost" id="rst">Borrar mi progreso</button>
+      <div class="confirm" id="cf"><p><b>¿Seguro?</b> No se puede deshacer.</p><div class="row"><button class="btn" id="yes" style="background:var(--bad)">Sí, borrar</button><button class="btn ghost" id="nop">Cancelar</button></div></div></div>`;
+  $('#rst').addEventListener('click', () => $('#cf').classList.add('on'));
+  $('#nop').addEventListener('click', () => $('#cf').classList.remove('on'));
+  $('#yes').addEventListener('click', () => { const th = S.theme; S = Object.assign({}, DEF, { best: {}, leit: {}, done: {}, theme: th }); save(); renderXP(); go('home'); });
+}
+
+/* ---------- arranque ---------- */
+renderXP();
+go('home');
+})();
+
+</script>
+</body>
+</html>
