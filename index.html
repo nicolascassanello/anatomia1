@@ -253,7 +253,7 @@ const LEVELS = [
 /* ---------- POSICIONES (pictogramas) ---------- */
 const POSITIONS = {
   supino: { name: 'Decúbito supino', group: 'básica', look: 'Boca arriba, brazos y piernas extendidos junto al cuerpo.', use: 'Exploración médica y postoperados.' },
-  dorsal: { name: 'Decúbito dorsal', group: 'básica', look: 'Boca arriba con las rodillas flexionadas y los talones apoyados.', use: 'Relajar los músculos del abdomen.' },
+  dorsal: { name: 'Decúbito dorsal', group: 'básica', look: 'Según la ficha de posiciones: boca arriba con las rodillas flexionadas y los talones apoyados. Ojo: el atlas de repaso de la profesora usa «supino (dorsal)» como sinónimos.', use: 'Relajar los músculos del abdomen.' },
   lateral: { name: 'Decúbito lateral', group: 'básica', look: 'De costado, espalda recta, pierna de abajo extendida y la de arriba flexionada.', use: 'Enemas, exploraciones, higiene, masajes.' },
   sims: { name: 'Posición de seguridad (Sims)', group: 'básica', look: 'Como la lateral pero girada hacia boca abajo (semiprona), pierna de arriba muy flexionada.', use: 'Pacientes inconscientes.' },
   prono: { name: 'Decúbito prono (ventral)', group: 'básica', look: 'Boca abajo, sobre el abdomen, cabeza girada a un lado.', use: 'Operados de la zona dorsal (espalda).' },
@@ -363,9 +363,24 @@ const QUESTIONS = [
   { m:'eje', q:'El eje transversal va…', o:['De lado a lado','De delante hacia atrás','De arriba abajo','En diagonal'], a:0, e:'Atraviesa el cuerpo de un costado al otro.' },
   { m:'eje', q:'El eje longitudinal va…', o:['De arriba abajo','De lado a lado','De delante hacia atrás','En diagonal'], a:0, e:'Recorre el cuerpo de la cabeza a los pies.' },
 
+
+  // ---- CASOS DEL ATLAS DE REPASO (profesora, 17/11)
+  { m:'eje', src:'atlas', q:'Caso clínico: un paciente levanta una mancuerna doblando el codo. ¿En qué plano y sobre qué eje ocurre principalmente el movimiento?', o:['Plano sagital y eje transversal','Plano frontal y eje anteroposterior','Plano transversal y eje vertical'], a:0, e:'La flexión del codo va hacia delante y atrás (sagital) y la articulación gira sobre un eje de lado a lado, «como la bisagra de una puerta».' },
+  { m:'eje', src:'atlas', q:'Caso clínico: miras a un paciente de frente y levanta los dos brazos hacia los lados hasta formar una «T». ¿Qué movimiento hace y en qué plano lo ves completo?', o:['Abducción en plano frontal','Aducción en plano transversal','Extensión en plano sagital'], a:0, e:'Los brazos se alejan de la línea media: abducción. Ocurre paralela al plano frontal, girando sobre el eje anteroposterior del hombro. Regla del atlas: abducción, con B de «aBrir».' },
+  { m:'pla', src:'atlas', q:'Caso clínico: en la pantalla del quirófano aparece un escáner del abdomen en el que los órganos forman un «anillo» alrededor de la vértebra. ¿Verdadero o falso: es un corte en el plano frontal?', o:['Falso: es un corte transversal (axial)','Verdadero: es un corte frontal'], a:0, e:'Es el corte típico del TAC: plano transversal u horizontal (axial), que separa superior de inferior. Un corte frontal separaría anterior de posterior.' },
+  { m:'pos', src:'atlas', q:'Caso clínico: un paciente acaba de salir de quirófano tras una cirugía extensa en la columna dorsal. ¿Qué posición básica eliges?', o:['Decúbito prono','Decúbito supino','Lateral / Sims'], a:0, e:'Boca abajo se libera por completo la presión sobre la zona dorsal operada.' },
+  { m:'pos', src:'atlas', q:'Caso clínico: llega a urgencias un paciente completamente inconsciente, esperando evaluación. ¿Qué posición eliges?', o:['Lateral / Sims (posición lateral de seguridad)','Decúbito supino','Decúbito prono'], a:0, e:'La posición de Sims funciona como posición lateral de seguridad: evita que la lengua obstruya la vía aérea y que aspire el vómito.' },
+  { m:'pos', src:'atlas', q:'Caso clínico: un paciente que se prepara para una cirugía de cuello sufre una lipotimia. Primero hay que recuperar el riego cerebral y luego colocarlo para operar el cuello. ¿Qué secuencia usas?', o:['1.º Trendelenburg → 2.º Roser','1.º Fowler → 2.º Genupectoral','1.º Antitrendelenburg → 2.º Litotomía'], a:0, e:'Trendelenburg (cabeza abajo) lleva sangre al cerebro por gravedad. Una vez estable, Roser (cabeza colgando) extiende al máximo el cuello para otorrino e intubación.' },
+  { m:'eje', src:'atlas', q:'Según el atlas de repaso, además de abducción y aducción, ¿qué otro movimiento ocurre en el plano frontal?', o:['La inclinación lateral del tronco','La rotación del tronco','La flexión del codo','La voltereta'], a:0, e:'Inclinar el tronco hacia un lado es un movimiento del plano frontal, alrededor del eje anteroposterior.' },
+  { m:'eje', src:'atlas', q:'¿Qué movimientos se producen en el plano transversal, según el atlas?', o:['Rotación interna, rotación externa y rotación axial','Flexión y extensión','Abducción y aducción','Inclinación lateral'], a:0, e:'Son giros sobre el propio eje vertical (longitudinal), como negar con la cabeza.' },
+  { m:'eje', src:'atlas', q:'El atlas define la flexión como…', o:['Aproximación de los huesos','Alejamiento de los huesos','Separación de la línea media','Giro sobre el eje vertical'], a:0, e:'Flexión: los huesos se acercan (se cierra el ángulo). Extensión: se alejan.' },
+  { m:'eje', src:'atlas', q:'¿Cuál de estos es otro nombre del eje longitudinal o vertical?', o:['Eje craneocaudal','Eje mediolateral','Eje anteroposterior','Eje coronal'], a:0, e:'Atraviesa el cuerpo de la cabeza (craneal) a los pies (caudal).' },
+  { m:'eje', src:'atlas', q:'¿Cuál es otro nombre del eje transversal?', o:['Eje mediolateral','Eje craneocaudal','Eje anteroposterior','Eje axial'], a:0, e:'Va de un lado al otro del cuerpo (de medial a lateral).' },
+  { m:'pos', src:'atlas', q:'Según el atlas, ¿por qué se usa la Antitrendelenburg en la hernia de hiato?', o:['Porque previene el reflujo','Porque lleva sangre al cerebro','Porque relaja el abdomen','Porque extiende el cuello'], a:0, e:'Con la cabeza más alta que los pies, el contenido del estómago no sube hacia el esófago.' },
+
   // ---- POSICIONES
-  { m:'pos', fig:'supino', q:'¿Qué posición es esta?', o:['Decúbito supino','Decúbito prono','Decúbito dorsal','Fowler'], a:0, e:'Boca arriba y todo estirado: decúbito supino.' },
-  { m:'pos', fig:'dorsal', q:'¿Qué posición es esta?', o:['Decúbito dorsal','Decúbito supino','Litotomía','Genupectoral'], a:0, e:'Boca arriba pero con las rodillas flexionadas: decúbito dorsal.' },
+  { m:'pos', fig:'supino', q:'¿Qué posición es esta?', o:['Decúbito supino','Decúbito prono','Roser','Fowler'], a:0, e:'Boca arriba y todo estirado: decúbito supino (el atlas de la profesora también lo llama «dorsal»).' },
+  { m:'pos', fig:'dorsal', q:'Según la ficha de posiciones, ¿qué posición es esta?', o:['Decúbito dorsal','Decúbito prono','Litotomía','Genupectoral'], a:0, e:'La ficha llama decúbito dorsal a estar boca arriba con las rodillas flexionadas. En el atlas de repaso, «dorsal» se usa como sinónimo de supino: si te lo preguntan, describe las piernas.' },
   { m:'pos', fig:'prono', q:'¿Qué posición es esta?', o:['Decúbito prono','Decúbito supino','Decúbito lateral','Roser'], a:0, e:'Boca abajo, sobre el abdomen: decúbito prono o ventral.' },
   { m:'pos', fig:'fowler', q:'¿Qué posición es esta?', o:['Fowler','Antitrendelenburg','Trendelenburg','Decúbito dorsal'], a:0, e:'Semisentado con el respaldo levantado a 45°: Fowler. En la Antitrendelenburg se inclina toda la camilla, no solo el respaldo.' },
   { m:'pos', fig:'trend', q:'¿Qué posición es esta?', o:['Trendelenburg','Antitrendelenburg','Fowler','Roser'], a:0, e:'Camilla inclinada con la cabeza más baja que los pies.' },
@@ -377,7 +392,7 @@ const QUESTIONS = [
   { m:'pos', fig:'lateral', q:'¿Qué posición es esta? (vista desde arriba)', o:['Decúbito lateral','Decúbito prono','Litotomía','Trendelenburg'], a:0, e:'De costado, con la pierna de arriba flexionada y la de abajo estirada.' },
   { m:'pos', q:'¿Para qué sirven sobre todo las posiciones básicas en pacientes encamados?', o:['Para evitar las úlceras por presión (UPP)','Para operar','Para hacer radiografías','Para hacer deporte'], a:0, e:'Cambiar de posición a quien no se mueve evita las úlceras por presión.' },
   { m:'pos', q:'¿Con qué inclinación del respaldo se describe la posición de Fowler en la ficha?', o:['45°','15°','90°','0°'], a:0, e:'Fowler 45°; semi-Fowler 30°; Fowler alta 90°.' },
-  { m:'pos', q:'¿Qué diferencia hay entre decúbito supino y decúbito dorsal?', o:['En el dorsal las rodillas están flexionadas','El dorsal es boca abajo','El supino es de costado','No hay diferencia'], a:0, e:'Los dos son boca arriba; la diferencia está en las piernas.' },
+  { m:'pos', q:'En la ficha de posiciones, ¿qué distingue al decúbito dorsal del supino?', o:['En el dorsal las rodillas están flexionadas','El dorsal es boca abajo','El supino es de costado','El dorsal es semisentado'], a:0, e:'Los dos son boca arriba; la ficha los distingue por las piernas. Ojo: en el atlas de repaso la profesora escribe «decúbito supino (dorsal)», como sinónimos.' },
   { m:'pos', q:'¿Qué posición pondrías a un paciente inconsciente?', o:['Posición de seguridad (Sims)','Decúbito supino','Fowler','Trendelenburg'], a:0, e:'Así, si vomita, el contenido sale por la boca y no pasa a la vía respiratoria.' },
   { m:'pos', q:'¿Qué posición es mejor para un paciente con dificultad para respirar?', o:['Fowler','Decúbito prono','Trendelenburg','Genupectoral'], a:0, e:'Semisentado respira mejor.' },
   { m:'pos', q:'¿En qué posición se coloca a una mujer para un parto, según la ficha?', o:['Ginecológica (litotomía)','Genupectoral','Roser','Decúbito lateral'], a:0, e:'La litotomía se usa en exploraciones ginecológicas y partos.' },
@@ -413,7 +428,7 @@ const CARDS = [
   { m:'eje', f:'Abducción / aducción', b:'Alejar de la línea media / acercar.' },
   { m:'eje', f:'Rotación', b:'Girar un segmento sobre su eje longitudinal.' },
   { m:'pos', f:'Decúbito supino', b:'Boca arriba, todo estirado. Exploración, postoperados.' },
-  { m:'pos', f:'Decúbito dorsal', b:'Boca arriba, rodillas flexionadas. Relaja el abdomen.' },
+  { m:'pos', f:'Decúbito dorsal', b:'Ficha: boca arriba, rodillas flexionadas (relaja el abdomen). Atlas: sinónimo de supino.' },
   { m:'pos', f:'Decúbito lateral', b:'De costado, pierna de arriba flexionada. Higiene, enemas.' },
   { m:'pos', f:'Posición de seguridad (Sims)', b:'Semiprona. Pacientes inconscientes.' },
   { m:'pos', f:'Decúbito prono', b:'Boca abajo. Operados de la espalda.' },
@@ -423,6 +438,9 @@ const CARDS = [
   { m:'pos', f:'Roser (Proetz)', b:'Cabeza colgando fuera de la camilla. Intubación, otorrino, ojos.' },
   { m:'pos', f:'Ginecológica (litotomía)', b:'Piernas en perneras. Ginecología, partos, sondaje vesical.' },
   { m:'pos', f:'Genupectoral', b:'Rodillas y pecho apoyados. Exploración rectal, enemas.' },
+  { m:'eje', f:'Inclinación lateral del tronco', b:'Movimiento del <b>plano frontal</b> (atlas de repaso).' },
+  { m:'eje', f:'Rotación interna / externa / axial', b:'Giros del <b>plano transversal</b> sobre el eje vertical.' },
+  { m:'eje', f:'Abducción: truco del atlas', b:'Ab<b>d</b>ucción con B = a<b>B</b>rir (alejar de la línea media).' },
   { m:'pos', f:'Úlceras por presión (UPP)', b:'Lo que se evita cambiando de posición al paciente encamado.' }
 ];
 
@@ -436,7 +454,7 @@ const MYTHS = [
   { x:'Basta con decir el plano de un movimiento.', v:'Hay que decir <b>plano y eje</b>: «flexión del codo, plano sagital, eje transversal».' },
   { x:'Todo movimiento ocurre en un solo plano.', v:'Muchos gestos combinan varios planos, como un paso de baile.' },
   { x:'Proximal y distal sirven para todo el cuerpo.', v:'Se usan en las <b>extremidades</b>. En el tronco, superior e inferior.' },
-  { x:'Supino y dorsal son lo mismo.', v:'Los dos son boca arriba, pero en el <b>dorsal</b> las rodillas están flexionadas.' },
+  { x:'«Decúbito dorsal» solo puede significar piernas flexionadas.', v:'Depende del material. La <b>ficha de posiciones</b> lo describe con las rodillas flexionadas, pero el <b>atlas de repaso</b> de la profesora escribe «decúbito supino (dorsal)» como sinónimos. Lo seguro: los dos son <b>boca arriba</b>; si en el dibujo hay rodillas flexionadas, dilo.' },
   { x:'En Trendelenburg la cabeza queda arriba.', v:'Al revés: en Trendelenburg la <b>cabeza está más baja</b> que los pies. Arriba es la <b>Anti</b>trendelenburg.' },
   { x:'Fowler y Antitrendelenburg son iguales.', v:'En Fowler se levanta solo el <b>respaldo</b> (semisentado). En Antitrendelenburg se inclina <b>toda la camilla</b>.' },
   { x:'«Plano longitudinal» y «eje longitudinal» son lo mismo.', v:'Los apuntes llaman al plano sagital «también longitudinal», pero el <b>eje longitudinal</b> es el vertical de la rotación. No los mezcles.' }
@@ -524,7 +542,7 @@ let cleanup = null;
 function go(view, arg) {
   if (cleanup) { try { cleanup(); } catch (e) {} cleanup = null; }
   window.scrollTo(0, 0);
-  const V = { home, learn, quiz: quizMod, sim, combo, quiro, cards, myths, progress };
+  const V = { home, learn, quiz: quizMod, sim, combo, quiro, cards, myths, progress, casos };
   (V[view] || home)(arg);
   app.focus({ preventScroll: true });
 }
@@ -573,6 +591,7 @@ function home() {
     <div class="grid2">${Object.keys(MODS).map(mission).join('')}</div>
     <h2>Zona de juego</h2>
     <div class="tools">
+      <button class="tool" data-go="casos" style="border-color:var(--gold)"><span class="e">🩺</span><b>Casos de la profesora</b><span>Del atlas de repaso (nuevo)</span></button>
       <button class="tool" data-go="combo"><span class="e">🎯</span><b>Plano + eje</b><span>Descompón gestos deportivos</span></button>
       <button class="tool" data-go="quiro"><span class="e">🏥</span><b>Quirófano</b><span>Elige la posición para cada técnica</span></button>
       <button class="tool" data-go="cards"><span class="e">🃏</span><b>Tarjetas</b><span>Memoria con repetición espaciada</span></button>
@@ -765,16 +784,16 @@ function learnEje() {
   <div class="tablewrap"><table>
     <tr><th>Plano</th><th>Eje</th><th>Movimiento</th><th>Ejemplos de clase</th></tr>
     <tr><td><b>Sagital</b></td><td>Transversal (de lado a lado)</td><td>Flexión y extensión</td><td>Flexión de cadera al correr, voltereta, curl de bíceps</td></tr>
-    <tr><td><b>Frontal</b></td><td>Sagital o anteroposterior</td><td>Abducción y aducción</td><td>Salto de estrella, rueda lateral, elevación lateral</td></tr>
-    <tr><td><b>Transversal</b></td><td>Longitudinal (de arriba abajo)</td><td>Rotación y torsión</td><td>Lanzamiento de disco, giro de patinaje, swing de golf</td></tr>
+    <tr><td><b>Frontal</b></td><td>Sagital o anteroposterior</td><td>Abducción y aducción; inclinación lateral del tronco</td><td>Salto de estrella, rueda lateral, elevación lateral</td></tr>
+    <tr><td><b>Transversal</b></td><td>Longitudinal, vertical o craneocaudal</td><td>Rotación interna, externa y axial</td><td>Lanzamiento de disco, giro de patinaje, swing de golf</td></tr>
   </table></div>
   <div class="box key"><span class="lab">Para memorizar</span><b>S</b>agital → eje <b>T</b>ransversal → flexión · <b>F</b>rontal → eje <b>S</b>agital → abducción · <b>T</b>ransversal → eje <b>L</b>ongitudinal → rotación.</div>
   <div class="box warn"><span class="lab">Nombres cruzados</span>«Sagital» aparece dos veces en filas distintas: el plano sagital va con el eje <b>transversal</b>, y el eje sagital va con el plano <b>frontal</b>.</div>
   <h3>Los movimientos básicos</h3>
   <div class="tablewrap"><table>
-    <tr><td><b>Flexión</b></td><td>Doblar: se cierra el ángulo de la articulación.</td></tr>
+    <tr><td><b>Flexión</b></td><td>Doblar: se cierra el ángulo; los huesos se aproximan.</td></tr>
     <tr><td><b>Extensión</b></td><td>Estirar: se abre el ángulo y se vuelve a la posición anatómica.</td></tr>
-    <tr><td><b>Abducción</b></td><td>Alejar un segmento de la línea media (ab- = separar).</td></tr>
+    <tr><td><b>Abducción</b></td><td>Alejar un segmento de la línea media. Truco del atlas: con B de «aBrir».</td></tr>
     <tr><td><b>Aducción</b></td><td>Acercarlo a la línea media (ad- = hacia).</td></tr>
     <tr><td><b>Rotación</b></td><td>Girar un segmento sobre su eje longitudinal.</td></tr>
   </table></div>
@@ -842,7 +861,7 @@ function learnPos() {
     <button data-f="all" aria-pressed="true">Todas</button><button data-f="básica" aria-pressed="false">Básicas</button><button data-f="quirúrgica" aria-pressed="false">Quirúrgicas</button>
   </div>
   <div class="grid2" id="psGrid" style="margin-top:10px"></div>
-  <div class="box warn"><span class="lab">Trampas</span><b>Supino</b> y <b>dorsal</b> son boca arriba; el dorsal lleva las rodillas flexionadas. <b>Trendelenburg</b>: cabeza abajo; <b>Anti</b>: cabeza arriba. En <b>Fowler</b> solo se levanta el respaldo; en Antitrendelenburg se inclina toda la camilla.</div>
+  <div class="box warn"><span class="lab">Trampas</span><b>Supino</b> y <b>dorsal</b> son boca arriba. La ficha llama «dorsal» a la variante con las rodillas flexionadas, pero el atlas de repaso los usa como sinónimos: si sale, describe las piernas. <b>Trendelenburg</b>: cabeza abajo; <b>Anti</b>: cabeza arriba. En <b>Fowler</b> solo se levanta el respaldo; en Antitrendelenburg se inclina toda la camilla.</div>
   <div class="box clin"><span class="lab">En la práctica clínica</span>Al paciente inconsciente se le pone en posición de seguridad para que, si vomita, el contenido salga por la boca y no pase a la vía respiratoria. El Fowler facilita respirar porque las vísceras bajan y el diafragma se mueve mejor.</div>
   <div class="box amp"><span class="lab">Ampliación</span>La ficha da 45° para Trendelenburg; en el hospital suelen usarse inclinaciones menores (15–30°). Para el examen, usa el dato de clase. <b>Genu</b> = rodilla y <b>pectoral</b> = pecho; <b>litotomía</b> viene de la antigua operación para sacar «piedras» (<i>lithos</i>) de la vejiga.</div>`;
   return { html, init() {
@@ -926,6 +945,10 @@ function runQuiz(list, opts) {
   render();
 }
 
+function casos() {
+  const start = () => runQuiz(shuffle(QUESTIONS.filter(q => q.src === 'atlas')), { title: 'Casos de la profesora', again: start });
+  start();
+}
 function quizMod(k) {
   const pool = QUESTIONS.filter(q => q.m === k);
   const start = () => runQuiz(shuffle(pool).slice(0, 10), { title: 'Reto · ' + MODS[k].name, mod: k, again: start });
